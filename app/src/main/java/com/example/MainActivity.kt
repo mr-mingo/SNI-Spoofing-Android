@@ -152,16 +152,16 @@ fun AppRootScreen(
     var selectedTab by remember { mutableStateOf(0) }
     
     // Default system config state
-    var listenPort by remember { mutableStateOf("8585") }
-    var connectHost by remember { mutableStateOf("104.21.32.203") }
+    var listenPort by remember { mutableStateOf("40443") }
+    var connectHost by remember { mutableStateOf("188.114.98.0") }
     var connectPort by remember { mutableStateOf("443") }
-    var fakeSni by remember { mutableStateOf("mci.ir") }
+    var fakeSni by remember { mutableStateOf("auth.vercel.com") }
     var bypassMethod by remember { mutableStateOf("TCP_FRAGMENTATION") }
 
     val activeConfig = remember(listenPort, connectHost, connectPort, fakeSni, bypassMethod) {
         ProxyConfig(
             listenHost = "127.0.0.1",
-            listenPort = listenPort.toIntOrNull() ?: 8585,
+            listenPort = listenPort.toIntOrNull() ?: 40443,
             connectHost = connectHost.trim(),
             connectPort = connectPort.toIntOrNull() ?: 443,
             fakeSni = fakeSni.trim(),
@@ -559,24 +559,53 @@ fun DashboardScreen(
         Spacer(modifier = Modifier.height(10.dp))
         
         // Android proxy routing tip
+        val clipboardManager = LocalClipboardManager.current
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFF0E131F), RoundedCornerShape(8.dp))
                 .border(1.dp, Color(0xFF1E263B), RoundedCornerShape(8.dp))
-                .padding(10.dp)
+                .padding(12.dp)
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "💡 How to connect your phone traffic to this Proxy:",
+                    color = Color(0xFF00FFCC),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                
+                Button(
+                    onClick = {
+                        clipboardManager.setText(AnnotatedString("127.0.0.1:${activeConfig.listenPort}"))
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF1E2F4C),
+                        contentColor = Color(0xFF00FFCC)
+                    ),
+                    shape = RoundedCornerShape(4.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 2.dp),
+                    modifier = Modifier.height(24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Copy Proxy",
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Copy", fontSize = 10.sp, fontWeight = FontWeight.Black)
+                }
+            }
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
-                "💡 How to connect your phone traffic to this Proxy of size:",
-                color = Color(0xFF00FFCC),
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                "Configure your Android Wi-Fi proxy settings, Telegram Proxy (Socks5/MTProto), or other network apps to point to: Host: 127.0.0.1 | Port: ${activeConfig.listenPort}. The server will split outbound handshakes securely.",
+                "Configure your Android Wi-Fi proxy settings, telegram proxy (Socks5/MTProto), or other network apps to point to Host: 127.0.0.1 and Port: ${activeConfig.listenPort}. The server will split outbound TLS flights securely on the fly. You can customize the ports, endpoint IP, and WHITELIST target SNI completely in the 'Config' tab!",
                 color = Color(0xFFC5D2E5),
                 lineHeight = 15.sp,
-                fontSize = 10.sp
+                fontSize = 11.sp
             )
         }
     }
