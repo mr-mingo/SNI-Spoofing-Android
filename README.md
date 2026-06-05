@@ -1,191 +1,186 @@
-# SNI-Spoofing-Android 🚀
+<div align="center">
+  <img src="https://img.icons8.com/color/144/shield.png" alt="SNI Spoofing Logo" />
+  <h1>SNI-Spoofing-Android</h1>
+  <p>🚀 یک کلاینت قدرتمند، سبک و متنباز برای دور زدن فیلترینگ و DPI از طریق جعل SNI و فرگمنتیشن در اندروید</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Android Platform](https://img.shields.io/badge/Platform-Android-green.svg?logo=android)](https://developer.android.com)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9+-purple.svg?logo=kotlin)](https://kotlinlang.org)
-
-یک پیاده‌سازی پیشرفته و بومی اندروید از تکنیک دور زدن فیلترینگ و بازرسی عمیق بسته‌ها (DPI) به روش **SNI-Spoofing** که کاملاً با زبان **کاتلین (Kotlin)** توسعه یافته است.
-
-این اپلیکیشن با ایجاد یک اینترفیس پروکسی/وی‌پی‌ان محلی روی دستگاه اندرویدی شما، بسته‌های ساختگی TLS ClientHello را با یک SNI جعلی (Spoofed) در طول دست‌اندازی TCP (Handshake) تزریق می‌کند. این کار باعث می‌شود تجهیزات DPI شبکه، یک دامنه مجاز (Decoy) را مشاهده کنند، در حالی که ترافیک واقعی شما به سلامت به مقصد اصلی خود هدایت می‌شود.
-
-> 💡 **بر اساس ایده و منطق پروژه اصلی:** [patterniha/SNI-Spoofing](https://github.com/patterniha/SNI-Spoofing)
-
----
-
-## ✨ ویژگی‌ها
-
-* **هسته بومی اندروید:** توسعه‌یافته به صورت کامل با کاتلین جهت دریافت بالاترین کارایی و بهینه‌ترین مصرف باتری.
-* **بای‌پاس حرفه‌ای DPI:** امکان تزریق بسته‌های ساختگی ClientHello با یک SNI کاملاً سفارشی و مجاز.
-* **جعل اثر انگشت تی‌ال‌اس (uTLS):** شبیه‌سازی اثر انگشت مرورگرهای مدرن برای جلوگیری از مسدودسازی بر اساس فینگرپرینت:
-  * Chrome, Firefox, Safari, Edge, iOS و غیره.
-* **کنترل‌های پیشرفته تزریق (Injection):**
-  * پشتیبانی از حالت‌های تزریق فعال و غیرفعال (Active/Passive).
-  * قابلیت تکه‌تکه کردن بسته‌ها (Fragmentation) جهت خرد کردن ClientHello واقعی به بخش‌های سفارشی.
-  * امکان تنظیم میزان تاخیر (Delay) و تعداد تکرار بسته‌های ساختگی.
-* **ماتریس تست شبکه داخلی:** اجرای پیش‌تست (Preflight) درون اپلیکیشن برای بررسی خودکار اینکه کدام ترکیب از uTLS و SNI روی شبکه شما بهترین پاسخ را می‌دهد.
-* **رابط کاربری مدرن Material 3:** طراحی شیک و تمیز همراه با پشتیبانی کامل از زبان‌های **فارسی** و انگلیسی.
+  <p>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><img src="https://img.shields.io/github/v/release/mr-mingo/SNI-Spoofing-Android?color=38BDF8&label=نسخه&style=for-the-badge" alt="Release"></a>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mr-mingo/SNI-Spoofing-Android?color=10B981&label=لایسنس&style=for-the-badge" alt="License"></a>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/stargazers"><img src="https://img.shields.io/github/stars/mr-mingo/SNI-Spoofing-Android?color=EAB308&label=ستاره‌ها&logo=github&style=for-the-badge" alt="Stars"></a>
+    <img src="https://img.shields.io/badge/پلتفرم-Android_7.0+-3DDC84?style=for-the-badge&logo=android" alt="Platform">
+  </p>
+</div>
 
 ---
 
-## 📸 اسکرین‌شات‌ها
+<div dir="rtl">
 
-<p align="center">
-  <img src="https://via.placeholder.com/250x500.png?text=Main+UI" width="250" alt="رابط کاربری اصلی" />
-  <img src="https://via.placeholder.com/250x500.png?text=Settings+Screen" width="250" alt="تنظیمات" />
-  <img src="https://via.placeholder.com/250x500.png?text=Test+Matrix" width="250" alt="ماتریس تست" />
-</p>
+## 🌟 معرفی پروژه
+**SNI-Spoofing-Android** یک اپلیکیشن بومی و اوپن‌سورس اندرویدی است که با ایجاد یک تونل پروکسی محلی (Local Proxy) و استفاده از تکنیک‌های پیشرفته خرد کردن بسته‌ها (TCP Fragmentation) و جعل نام سرور (SNI Spoofing)، به شما اجازه می‌دهد از سد سیستم‌های تحلیل‌گر عمیق بسته‌ها (DPI) عبور کنید.
+این برنامه بدون نیاز به دسترسی روت (Root) کار می‌کند و ابزاری عالی برای استفاده در کنار کلاینت‌هایی مانند Hiddify یا v2rayNG محسوب می‌شود.
 
----
+## ✨ ویژگی‌های کلیدی
+- 🛡️ **عبور از DPI:** دور زدن محدودیت‌های فیلترینگ مبتنی بر SNI با مکانیسم‌های قطعه‌قطعه کردن (Fragmentation).
+- ⚡ **پروکسی لوکال (Loopback):** بدون تداخل با VPN‌های سیستم کار می‌کند و به صورت یک پروکسی واسط در پورت مشخص روی آدرس لوکال (`127.0.0.1`) اجرا می‌شود.
+- 🎨 **رابط کاربری مدرن:** طراحی چشم‌نواز، مینیمال و کاربرپسند توسعه یافته با Jetpack Compose.
+- 📉 **مانیتورینگ زنده:** مشاهده وضعیت ترافیک مصرفی، اتصالات فعال و تاریخچه لاگ‌ها در لحظه (Real-time).
+- 🎛️ **شورتکات تنظیمات سریع (QS Tile):** امکان خاموش/روشن کردن پروکسی از طریق کنترل سنتر اندروید (Quick Settings).
+- 🌓 **پشتیبانی از تم تاریک و روشن** + پشتیبانی از زبان فارسی و انگلیسی.
 
-## 📥 راهنمای نصب
+## 🛠 ابعاد فنی و معماری
+این برنامه با استفاده از معماری مدرن اندروید و بهترین الگوهای توسعه طراحی شده است تا کمترین میزان مصرف باتری و بالاترین پرفورمنس را روی گوشی‌های موبایل داشته باشد. معماری برنامه به صورت Event-driven بوده و ارتباط بین تونل پروکسی و لایه UI از طریق استریم‌های پایدار جریان داده در کاتلین صورت می‌گیرد.
 
-ما از سیستم ریلیز گیتهاب برای انتشار برنامه‌ها استفاده می‌کنیم:
+**کتابخانه‌ها و فریم‌ورک‌های مورد استفاده:**
+* **Kotlin:** زبان برنامه‌نویسی اصلی با استفاده از Coroutines و StateFlow برای مدیریت Thread‌ها و عملیات‌های Asynchronous.
+* **Jetpack Compose:** فریم‌ورک اصلی برای ساخت رابط کاربری (UI) مدرن به جای XML.
+* **Android Service & Foreground Notifications:** برای زنده نگه‌داشتن پروسس‌ها در پس‌زمینه بدون کشته شدن توسط سیستم‌عامل.
+* **TileService API:** برای هندل کردن دکمه منوی تنظیمات سریع (Quick Setting).
+* **Network Sockets:** پیاده‌سازی سوکت‌های سطح پایین پروتکل TCP برای رله کردن ریکوئست‌ها و ایجاد Fragmentation در سطح کلاینت.
 
-* **نسخه‌های آلفا/بتا (`v0.1.0` تا `v0.9.x`):** نسخه‌های آزمایشی و در حال توسعه هستند که تحت عنوان `Pre-release` منتشر می‌شوند. این نسخه‌ها شامل آخرین تغییرات هستند اما ممکن است باگ داشته باشند.
-* **نسخه‌های پایدار (`v1.0.0+`):** نسخه‌های نهایی، کاملاً تست‌شده و بدون مشکل که برای استفاده عموم آماده هستند.
+## 🚀 نصب و راه‌اندازی (Development)
 
-به بخش [**Releases**](https://github.com/mrdelinco/SNI-Spoofing-Android/releases) در همین ریپازیتوری بروید، آخرین فایل `.apk` سازگار با معماری پردازنده خود را دانلود و نصب کنید.
-
----
-
-## 🛠 راهنمای استفاده سریع
-
-1. **تنظیم مقصد:** آدرس IP یا هاست سرور بالادستی (Upstream) و پورت آن را وارد کنید (مثال: `104.19.229.21:443`).
-2. **تنظیم SNI جعلی:** یک دامنه مجاز و سفید که در شبکه شما مسدود نیست وارد کنید (مثال: `hcaptcha.com`).
-3. **انتخاب فینگرپرینت:** یک ساختار uTLS انتخاب کنید (مثال: `Firefox` یا `Chrome`).
-4. **تست شبکه (پیشنهادی):** روی دکمه **Run Test Matrix** بزنید. اپلیکیشن ۲۴ حالت مختلف را بررسی کرده و بهترین کانفیگ را به شما نشان می‌دهد.
-5. **اتصال:** سوئیچ **Start** را روشن کنید. در صورت نیاز، مجوز ایجاد VPN داخلی اندروید را تایید کنید.
-
-### پارامترهای پیشرفته تنظیمات
-
-| پارامتر | مقدار پیش‌فرض | توضیحات |
-| :--- | :--- | :--- |
-| **Fake SNI** | *ندارد* | دامنه ساختگی که سیستم فیلترینگ (DPI) آن را می‌بیند. |
-| **uTLS Preset** | `Firefox` | اثر انگشت مرورگر برای بسته ClientHello. |
-| **Injector Mode** | `Active` | حالت تزریق بسته‌ها به صورت فعال (`Active`) یا غیرفعال (`Passive`). |
-| **Fake Repeat** | `1` | تعداد دفعات ارسال بلایندِ بسته‌های ساختگی. |
-| **Fake Delay** | `2ms` | مدت زمان تاخیر قبل از فرستادن ترافیک اصلی دست‌اندازی. |
-| **Enable Fragment**| `False` | تکه‌تکه کردن بسته‌های اصلی برای عبور از فیلترینگ سخت‌گیرانه. |
-| **SNI Chunk Size** | `3 bytes` | سایز هر تکه در صورت فعال بودن قابلیت فِرگمنتیشن. |
-
----
-
-## 🏗 نیازمندی‌ها و توسعه از روی سورس‌کد
-
-### پیش‌نیازها
-* Android Studio (نسخه Koala یا جدیدتر)
-* Android SDK 34+
-* Gradle 8.x+
-* JDK 17+
-
-### مراحل بیلد شخصی
-1. مخزن را کلون کنید:
-```bash
-   git clone [https://github.com/mrdelinco/SNI-Spoofing-Android.git](https://github.com/mrdelinco/SNI-Spoofing-Android.git)
-   cd SNI-Spoofing-Android
-
-```
-
-2. پروژه را در اندروید استودیو باز کنید.
-3. بگذارید گریدل سینک (Sync) شود.
-4. برای گرفتن خروجی نهایی APK، دستور زیر را در ترمینال اجرا کنید:
+برای اجرای سورس کد روی ماشین توسعه خودت، مراحل زیر را طی کن:
 
 ```bash
-   ./gradlew assembleRelease
+# 1. مخزن را کلون کنید
+git clone https://github.com/mr-mingo/SNI-Spoofing-Android.git
 
-```
-
-فایل نهایی در مسیر `app/build/outputs/apk/release/` ذخیره خواهد شد.
-
----
-
-## 🗺 نقشه راه (Roadmap)
-
-* [ ] **نسخه‌های v0.1.0 تا v0.4.0:** معماری اولیه کاتلین، پایداری سرویس VPN محلی و اینجکتور اکتیو پایه.
-* [ ] **نسخه‌های v0.5.0 تا v0.8.0:** پیاده‌سازی حالت پاسیو، فرگمنتیشن بسته‌ها و تکمیل رابط کاربری Material 3.
-* [ ] **نسخه‌های v0.9.x:** بهینه‌سازی کدهای شبکه و افزودن بخش ماتریس تست پیشرفته داخل اپ.
-* [ ] **نسخه v1.0.0 (پایدار):** انتشار رسمی اولین نسخه استیبل همراه با کاشی تنظیمات سریع (Quick Settings Tile).
-
----
-
-## 📄 لایسنس
-
-این پروژه تحت لایسنس **MIT** منتشر شده است. برای اطلاعات بیشتر فایل [LICENSE](https://www.google.com/search?q=LICENSE) را مطالعه کنید.
-
----
-
-## 🤝 تشکر و قدردانی
-
-* از **[@patterniha](https://github.com/patterniha)** برای طراحی ایده، منطق و پایه پروژه اصلی [SNI-Spoofing](https://github.com/patterniha/SNI-Spoofing).
-
----
-
----
-
-# English Version (Documentation)
-
-An advanced Android implementation of the **SNI-Spoofing** DPI bypass technique, written natively in **Kotlin**.
-
-This application creates a local VPN/Proxy interface on your Android device to inject fake TLS ClientHello packets with spoofed SNIs during the TCP handshake. This allows you to bypass Deep Packet Inspection (DPI) systems by showing them a decoy SNI, while your actual traffic safely reaches its intended destination.
-
-> 💡 **Based on the original concept:** [patterniha/SNI-Spoofing](https://github.com/patterniha/SNI-Spoofing)
-
-## ✨ Features
-
-* **Native Android Core:** Built entirely with Kotlin for maximum performance.
-* **DPI Bypass Backend:** Injects fake ClientHello packets with customizable decoy SNIs.
-* **TLS Fingerprint Spoofing (uTLS):** Mimic modern browsers (Chrome, Firefox, Safari, Edge, etc.).
-* **Built-in Network Test Matrix:** Run preflight checks inside the app to verify network compatibility.
-
-## 📥 Installation
-
-Go to the **[Releases](https://www.google.com/url?sa=E&source=gmail&q=https://github.com/mrdelinco/SNI-Spoofing-Android/releases)** section:
-
-* **Pre-releases (`v0.1.0` to `v0.9.x`):** Testing versions containing experimental features.
-* **Stable Releases (`v1.0.0+`):** Official stable production APKs.
-
-## 🏗 Building from Source
-
-```bash
-git clone [https://github.com/mrdelinco/SNI-Spoofing-Android.git](https://github.com/mrdelinco/SNI-Spoofing-Android.git)
+# 2. وارد پوشه پروژه شوید
 cd SNI-Spoofing-Android
-./gradlew assembleRelease
 
+# 3. با استفاده از گریدل پروژه را بیلد کنید
+# اطمینان حاصل کنید که جاوا 11+ روی سیستم نصب باشد
+./gradlew assembleDebug
+```
+شما می‌توانید فایل APK خروجی را مستقیماً از پوشه `app/build/outputs/apk/debug/` روی گوشی نصب کنید.
+
+## 💡 چگونه کار می‌کند؟
+1. اپلیکیشن را اجرا کرده و دکمه **شروع (Start)** را بزنید. 
+2. اپلیکیشن یک پروکسی روی `127.0.0.1` (به صورت پیش‌فرض با پورت `40443`) اجرا می‌کند.
+3. در کلاینت مورد نظر خود (مثل Hiddify یا v2rayNG)، در پنل کانفیگ، آدرس اتصال یا Routing را به سرور `127.0.0.1` و پورت تنظیم شده تغییر دهید.
+4. تمام ریکوئست‌های ارسالی کلاینت شما، قبل از خروج به فضای اینترنت، از این اپلیکیشن رد می‌شوند، پردازش و Fragment می‌شوند و در نهایت به سمت سرور واقعی (شما) پرتاب می‌شوند.
+
+## 📚 مراجع و رفرنس‌ها
+* Core Bypass Logic based on: [patterniha/SNI-Spoofing](https://github.com/patterniha/SNI-Spoofing)
+
+## ⚖️ لایسنس
+این پروژه تحت پروانه متن‌باز **MIT License** منتشر شده است. استفاده و تغییر در سورس کد آزاد می‌باشد.
+
+## ☕ حمایت مالی
+
+اگر این پروژه برایتان مفید بود و تمایل داشتید از توسعه آن حمایت کنید، می‌توانید از طریق شبکه‌های رمزارز زیر دونیت کنید:
+
+آدرس شبکه‌های ETH, BNB, MATIC (ERC20, BEP20):
+```text
+0x9391475e4606322dc4a35daeef2da16910862afb
 ```
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
-
+آدرس شبکه TRON (TRC20):
+```text
+TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
 ```
+
+آدرس شبکه Bitcoin:
+```text
+bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
+```
+
+آدرس شبکه Dogecoin:
+```text
+DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
+```
+
+آدرس شبکه TON:
+```text
+UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
+```
+از حمایت شما متشکرم! 🙏
+
+</div>
 
 ---
 
-### 💡 یک کار دیگر که باید انجام دهید (ساخت فایل لایسنس):
+<div dir="ltr">
 
-برای اینکه گیتهاب به طور هوشمند پروژه شما را به عنوان لایسنس MIT بشناسد و بچِ (Badge) زرد رنگ آن فعال شود، باید یک فایل جداگانه به نام `LICENSE` (بدون هیچ پسوندی) در ریشه اصلی پروژه‌تان بسازید و متن زیر را داخل آن کپی کنید:
+## 🌟 Introduction
+**SNI-Spoofing-Android** is a native, open-source Android application that creates a local proxy tunnel to help you bypass Deep Packet Inspection (DPI) and SNI-based filtering. It uses advanced TCP fragmentation techniques to spoof the Server Name Indication during the TLS handshake.
+The application operates entirely without root permissions and perfectly pairs as a routing overlay for clients like Hiddify or v2rayNG.
 
-```text
-MIT License
+## ✨ Key Features
+- 🛡️ **DPI Evasion:** Overcome SNI-based filtering limitations using robust TCP fragmentation mechanisms.
+- ⚡ **Local Proxy (Loopback):** Operates on `127.0.0.1` and runs non-intrusively without touching system VpnService, ensuring it doesn't conflict with other VPN tunnels.
+- 🎨 **Modern Interface:** Experience a beautifully crafted, minimal, and user-friendly UI built natively using Jetpack Compose.
+- 📉 **Real-time Monitoring:** Keep track of live traffic streams, transmitted bytes, and active connection flows through the interactive dashboard.
+- 🎛️ **Quick Settings (QS) Tile:** Start or stop the tunneling process directly from the Android control center.
+- 🌓 **Dynamic Theming:** Seamless support for Dark & Light modes, adapting directly to your system preferences. Fully Bilingual (English & Persian).
 
-Copyright (c) 2026 mrdelinco
+## 🛠 Technical Architecture
+The app is engineered using modern Android development patterns, designed to offer high performance, minimal battery consumption, and maximum reliability on mobile platforms. Interaction between the background proxy engine and the UI relies on stable, reactive stream flows in Kotlin.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+**Libraries & Technologies used:**
+* **Kotlin:** Core backend implementation, taking advantage of Coroutines and `StateFlow` for state management and async socket processing.
+* **Jetpack Compose:** The prominent Android UI toolkit for constructing an interactive, reactive frontend layout.
+* **Android Native Services:** Leveraging Foreground Services and Notifications to maintain sustained socket activity and network relays without aggressive system kills.
+* **TileService:** Deeply integrated with the Android infrastructure to provide a functional QS Menu shortcut tool.
+* **Custom Sockets:** Lower-level Java networking Socket implementation to process TCP streams and execute customized fragmentation logic in transit.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## 🚀 Installation & Setup 
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+To build and test the codebase locally, run the standard Gradle procedures:
 
+```bash
+# 1. Clone the repository
+git clone https://github.com/mr-mingo/SNI-Spoofing-Android.git
+
+# 2. Change directory
+cd SNI-Spoofing-Android
+
+# 3. Assemble the project 
+# Ensure Java 11+ is installed in your environment
+./gradlew assembleDebug
 ```
+You can install the generated artifact directly from the `app/build/outputs/apk/debug/` directory to your connected target device.
+
+## 💡 How it Works
+1. Launch the app and tap **Start**.
+2. A local intermediate proxy will listen on `127.0.0.1` (default port `40443`).
+3. Inside your primary VPN client (like Hiddify or v2rayNG), configure the outbound route or direct server proxy target to point toward `127.0.0.1` at the designated port.
+4. Your connection flows outbound entirely through this application, where TLS handshakes are fragmented intentionally to bypass ISP-level Deep Packet Inspection firewalls before routing externally to the actual target servers.
+
+## 📚 References
+* Core bypass logic is highly inspired by and structurally sourced from: [patterniha/SNI-Spoofing](https://github.com/patterniha/SNI-Spoofing)
+
+## ⚖️ License
+This project is released under the **MIT License**. It is fully open-source and freely available for modifications.
+
+## ☕ Donation
+
+If you found this project useful and would like to support its development, you can make a donation in one of the following crypto networks:
+
+ETH, BNB, MATIC network (ERC20, BEP20):
+```text
+0x9391475e4606322dc4a35daeef2da16910862afb
+```
+
+TRON network (TRC20):
+```text
+TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
+```
+
+Bitcoin network:
+```text
+bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
+```
+
+Dogecoin network:
+```text
+DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
+```
+
+TON network:
+```text
+UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
+```
+Thank you for your support! 🙏
+
+</div>
