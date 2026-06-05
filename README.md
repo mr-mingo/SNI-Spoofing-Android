@@ -7,7 +7,12 @@
     <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><img src="https://img.shields.io/github/v/release/mr-mingo/SNI-Spoofing-Android?color=38BDF8&label=نسخه&style=for-the-badge" alt="Release"></a>
     <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mr-mingo/SNI-Spoofing-Android?color=10B981&label=لایسنس&style=for-the-badge" alt="License"></a>
     <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/stargazers"><img src="https://img.shields.io/github/stars/mr-mingo/SNI-Spoofing-Android?color=EAB308&label=ستاره‌ها&logo=github&style=for-the-badge" alt="Stars"></a>
-    <img src="https://img.shields.io/badge/پلتفرم-Android_7.0+-3DDC84?style=for-the-badge&logo=android" alt="Platform">
+  </p>
+
+  <p>
+    <a href="https://developer.android.com"><img src="https://img.shields.io/badge/پلتفرم-Android_7.0+-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Platform"></a>
+    <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/زبان-Kotlin_1.9+-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin"></a>
+    <a href="https://developer.android.com/jetpack/compose"><img src="https://img.shields.io/badge/رابط_کاربری-Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Compose"></a>
   </p>
 </div>
 
@@ -75,7 +80,7 @@ cd SNI-Spoofing-Android
 
 ---
 
-## 💡 چگونه کار می‌کند؟
+## 💡 چگونه کار می‌کند？
 
 1. اپلیکیشن را اجرا کرده و دکمه **شروع (Start)** را بزنید.
 2. اپلیکیشن یک پروکسی روی `127.0.0.1` (به صورت پیش‌فرض با پورت `40443`) اجرا می‌کند.
