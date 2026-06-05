@@ -1,3 +1,4 @@
+```markdown
 <div align="center">
   <img src="https://img.icons8.com/color/144/shield.png" alt="SNI Spoofing Logo" />
   <h1>SNI-Spoofing-Android</h1>
@@ -10,58 +11,67 @@
   </p>
 
   <p>
-    <a href="https://developer.android.com"><img src="https://img.shields.io/badge/پلتفرم-Android_7.0+-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Platform"></a>
-    <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/زبان-Kotlin_1.9+-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin"></a>
-    <a href="https://developer.android.com/jetpack/compose"><img src="https://img.shields.io/badge/رابط_کاربری-Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Compose"></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square" alt="License: MIT"></a>
+    <a href="https://developer.android.com"><img src="https://img.shields.io/badge/Platform-Android-green.svg?logo=android&style=flat-square" alt="Android Platform"></a>
+    <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-1.9+-purple.svg?logo=kotlin&style=flat-square" alt="Kotlin"></a>
   </p>
 </div>
 
 ---
 
-<div dir="rtl">
+<div dir="rtl" style="text-align: right;">
 
-## 🌟 معرفی پروژه
-**SNI-Spoofing-Android** یک اپلیکیشن بومی و اوپن‌سورس اندرویدی است که با ایجاد یک تونل پروکسی محلی (Local Proxy) و استفاده از تکنیک‌های پیشرفته خرد کردن بسته‌ها (TCP Fragmentation) و جعل نام سرور (SNI Spoofing)، به شما اجازه می‌دهد از سد سیستم‌های تحلیل‌گر عمیق بسته‌ها (DPI) عبور کنید.
+<h2 style="text-align: right;">🌟 معرفی پروژه</h2>
+<p style="text-align: right;">
+<strong>SNI-Spoofing-Android</strong> یک اپلیکیشن بومی و اوپن‌سورس اندرویدی است که با ایجاد یک تونل پروکسی محلی (Local Proxy) و استفاده از تکنیک‌های پیشرفته خرد کردن بسته‌ها (TCP Fragmentation) و جعل نام سرور (SNI Spoofing)، به شما اجازه می‌دهد از سد سیستم‌های تحلیل‌گر عمیق بسته‌ها (DPI) عبور کنید.
+</p>
+<p style="text-align: right;">
 این برنامه بدون نیاز به دسترسی روت (Root) کار می‌کند و ابزاری عالی برای استفاده در کنار کلاینت‌هایی مانند Hiddify یا v2rayNG محسوب می‌شود.
+</p>
 
 ---
 
-## ✨ ویژگی‌های کلیدی
-- 🛡️ **عبور از DPI:** دور زدن محدودیت‌های فیلترینگ مبتنی بر SNI با مکانیسم‌های قطعه‌قطعه کردن (Fragmentation).
-- ⚡ **پروکسی لوکال (Loopback):** بدون تداخل با VPN‌های سیستم کار می‌کند و به صورت یک پروکسی واسط در پورت مشخص روی آدرس لوکال (`127.0.0.1`) اجرا می‌شود.
-- 🎨 **رابط کاربری مدرن:** طراحی چشم‌نواز، مینیمال و کاربرپسند توسعه یافته با Jetpack Compose (Material 3).
-- 📉 **مانیتورینگ زنده:** مشاهده وضعیت ترافیک مصرفی، اتصالات فعال و تاریخچه لاگ‌ها در لحظه (Real-time).
-- 🎛️ **شورتکات تنظیمات سریع (QS Tile):** امکان خاموش/روشن کردن پروکسی از طریق کنترل سنتر اندروید (Quick Settings).
-- 🌓 **پشتیبانی از تم تاریک و روشن** + پشتیبانی از زبان فارسی و انگلیسی.
+<h2 style="text-align: right;">✨ ویژگی‌های کلیدی</h2>
+<ul style="text-align: right; direction: rtl;">
+  <li>🛡️ <strong>عبور از DPI:</strong> دور زدن محدودیت‌های فیلترینگ مبتنی بر SNI با مکانیسم‌های قطعه‌قطعه کردن (Fragmentation).</li>
+  <li>⚡ <strong>پروکسی لوکال (Loopback):</strong> بدون تداخل با VPN‌های سیستم کار می‌کند و به صورت یک پروکسی واسط در پورت مشخص روی آدرس لوکال (<code>127.0.0.1</code>) اجرا می‌شود.</li>
+  <li>🎨 <strong>رابط کاربری مدرن:</strong> طراحی چشم‌نواز، مینیمال و کاربرپسند توسعه یافته با Jetpack Compose (Material 3).</li>
+  <li>📉 <strong>مانیتورینگ زنده:</strong> مشاهده وضعیت ترافیک مصرفی، اتصالات فعال و تاریخچه لاگ‌ها در لحظه (Real-time).</li>
+  <li>🎛️ <strong>شورتکات تنظیمات سریع (QS Tile):</strong> امکان خاموش/روشن کردن پروکسی از طریق کنترل سنتر اندروید (Quick Settings).</li>
+  <li>🌓 <strong>پشتیبانی از تم تاریک و روشن</strong> + پشتیبانی از زبان فارسی و انگلیسی.</li>
+</ul>
 
 ---
 
-## 📥 روند انتشار نسخه‌ها و نصب
-
-ما از سیستم ریلیز گیتهاب برای انتشار برنامه‌ها استفاده می‌کنیم:
-
-* **نسخه‌های آلفا/بتا (`v0.1.0` تا `v0.9.x`):** نسخه‌های آزمایشی و در حال توسعه هستند که تحت عنوان `Pre-release` منتشر می‌شوند. این نسخه‌ها شامل آخرین تغییرات فنی هستند اما ممکن است باگ داشته باشند.
-* **نسخه‌های پایدار (`v1.0.0+`):** نسخه‌های نهایی، کاملاً تست‌شده و بدون مشکل که برای استفاده عموم آماده هستند.
-
-به بخش **Releases** در همین ریپازیتوری بروید، آخرین فایل `.apk` را دانلود و روی گوشی خود نصب کنید.
+<h2 style="text-align: right;">📥 روند انتشار نسخه‌ها و نصب</h2>
+<p style="text-align: right;">ما از سیستم ریلیز گیتهاب برای انتشار برنامه‌ها استفاده می‌کنیم:</p>
+<ul style="text-align: right; direction: rtl;">
+  <li><strong>نسخه‌های آلفا/بتا (<code>v0.1.0</code> تا <code>v0.9.x</code>):</strong> نسخه‌های آزمایشی و در حال توسعه هستند که تحت عنوان <code>Pre-release</code> منتشر می‌شوند. این نسخه‌ها شامل آخرین تغییرات فنی هستند اما ممکن است باگ داشته باشند.</li>
+  <li><strong>نسخه‌های پایدار (<code>v1.0.0+</code>):</strong> نسخه‌های nهایی، کاملاً تست‌شده و بدون مشکل که برای استفاده عموم آماده هستند.</li>
+</ul>
+<p style="text-align: right;">
+به بخش <strong>Releases</strong> در همین ریپازیتوری بروید، آخرین فایل <code>.apk</code> را دانلود و روی گوشی خود نصب کنید.
+</p>
 
 ---
 
-## 🛠 ابعاد فنی و معماری
+<h2 style="text-align: right;">🛠 ابعاد فنی و معماری</h2>
+<p style="text-align: right;">
 این برنامه با استفاده از معماری مدرن اندروید و بهترین الگوهای توسعه طراحی شده است تا کمترین میزان مصرف باتری و بالاترین پرفورمنس را روی گوشی‌های موبایل داشته باشد. معماری برنامه به صورت Event-driven بوده و ارتباط بین تونل پروکسی و لایه UI از طریق استریم‌های پایدار جریان داده در کاتلین صورت می‌گیرد.
-
-**کتابخانه‌ها و فریم‌ورک‌های مورد استفاده:**
-* **Kotlin:** زبان برنامه‌نویسی اصلی با استفاده از Coroutines و StateFlow برای مدیریت Thread‌ها و عملیات‌های Asynchronous.
-* **Jetpack Compose:** فریم‌ورک اصلی برای ساخت رابط کاربری (UI) مدرن به جای XML.
-* **Android Service & Foreground Notifications:** برای زنده نگه‌داشتن پروسس‌ها در پس‌زمینه بدون کشته شدن توسط سیستم‌عامل.
-* **TileService API:** برای هندل کردن دکمه منوی تنظیمات سریع (Quick Setting).
-* **Network Sockets:** پیاده‌سازی سوکت‌های سطح پایین پروتکل TCP برای رله کردن ریکوئست‌ها و ایجاد Fragmentation در سطح کلاینت.
+</p>
+<p style="text-align: right;"><strong>کتابخانه‌ها و فریم‌ورک‌های مورد استفاده:</strong></p>
+<ul style="text-align: right; direction: rtl;">
+  <li><strong>Kotlin:</strong> زبان برنامه‌نویسی اصلی با استفاده از Coroutines و StateFlow برای مدیریت Thread‌ها و عملیات‌های Asynchronous.</li>
+  <li><strong>Jetpack Compose:</strong> فریم‌ورک اصلی برای ساخت رابط کاربری (UI) مدرن به جای XML.</li>
+  <li><strong>Android Service & Foreground Notifications:</strong> برای زنده نگه‌داشتن پروسس‌ها در پس‌زمینه بدون کشته شدن توسط سیستم‌عامل.</li>
+  <li><strong>TileService API:</strong> برای هندل کردن دکمه منوی تنظیمات سریع (Quick Setting).</li>
+  <li><strong>Network Sockets:</strong> پیاده‌سازی سوکت‌های سطح پایین پروتکل TCP برای رله کردن ریکوئست‌ها و ایجاد Fragmentation در سطح کلاینت.</li>
+</ul>
 
 ---
 
-## 🚀 نصب و راه‌اندازی (Development)
-
-برای اجرای سورس کد روی ماشین توسعه خودت، مراحل زیر را طی کن:
+<h2 style="text-align: right;">🚀 نصب و راه‌اندازی (Development)</h2>
+<p style="text-align: right;">برای اجرای سورس کد روی ماشین توسعه خودت، مراحل زیر را طی کن:</p>
 
 ```bash
 # 1. مخزن را کلون کنید
@@ -76,80 +86,40 @@ cd SNI-Spoofing-Android
 
 ```
 
-شما می‌توانید فایل APK خروجی را مستقیماً از پوشه `app/build/outputs/apk/debug/` روی گوشی نصب کنید.
+---
 
 ---
 
-## 💡 چگونه کار می‌کند？
-
-1. اپلیکیشن را اجرا کرده و دکمه **شروع (Start)** را بزنید.
-2. اپلیکیشن یک پروکسی روی `127.0.0.1` (به صورت پیش‌فرض با پورت `40443`) اجرا می‌کند.
-3. در کلاینت مورد نظر خود (مثل Hiddify یا v2rayNG)، در پنل کانفیگ، آدرس اتصال یا Routing را به سرور `127.0.0.1` و پورت تنظیم شده تغییر دهید.
-4. تمام ریکوئست‌های ارسالی کلاینت شما، قبل از خروج به فضای اینترنت، از این اپلیکیشن رد می‌شوند، پردازش و Fragment می‌شوند و در نهایت به سمت سرور واقعی فرستاده می‌شوند.
+---
 
 ---
 
-## 🗺 نقشه راه (Roadmap)
-
-* [ ] **نسخه‌های v0.1.0 تا v0.4.0:** معماری اولیه کاتلین، پایداری سرویس پروکسی محلی و فرگمنتیشن پایه.
-* [ ] **نسخه‌های v0.5.0 تا v0.8.0:** مانیتورینگ زنده اتصالات، تکمیل رابط کاربری با Jetpack Compose و بهینه‌سازی لاگ‌ها.
-* [ ] **نسخه‌های v0.9.x:** افزودن بخش شورتکات تنظیمات سریع (QS Tile) و تست خودکار شبکه.
-* [ ] **نسخه v1.0.0 (پایدار):** انتشار رسمی اولین نسخه استیبل و بدون نقص برنامه در بخش Releases.
-
 ---
-
-## 📚 مراجع و رفرنس‌ها
-
-* Core Bypass Logic based on: [patterniha/SNI-Spoofing](https://github.com/patterniha/SNI-Spoofing)
-
----
-
-## ⚖️ لایسنس
-
-این پروژه تحت پروانه متن‌باز **MIT License** منتشر شده است. استفاده و تغییر در سورس کد آزاد می‌باشد.
-
----
-
-## ☕ حمایت مالی
-
-اگر این پروژه برایتان مفید بود و تمایل داشتید از توسعه آن حمایت کنید، می‌توانید از طریق شبکه‌های رمزارز زیر دونیت کنید:
-
-آدرس شبکه‌های ETH, BNB, MATIC (ERC20, BEP20):
 
 ```text
 0x9391475e4606322dc4a35daeef2da16910862afb
 
 ```
 
-آدرس شبکه TRON (TRC20):
-
 ```text
 TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
 
 ```
-
-آدرس شبکه Bitcoin:
 
 ```text
 bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
 
 ```
 
-آدرس شبکه Dogecoin:
-
 ```text
 DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
 
 ```
 
-آدرس شبکه TON:
-
 ```text
 UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 
 ```
-
-از حمایت شما متشکرم! 🙏
 
 ---
 
