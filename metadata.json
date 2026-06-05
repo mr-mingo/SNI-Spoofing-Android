@@ -1,0 +1,6 @@
+{
+  "name": "SNI Spoofing",
+  "description": "Android client for SNI Spoofing and DPI Bypass simulation with live local proxy server.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
