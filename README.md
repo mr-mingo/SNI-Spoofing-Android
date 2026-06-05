@@ -1,4 +1,3 @@
-```markdown
 <div align="center">
   <img src="https://img.icons8.com/color/144/shield.png" alt="SNI Spoofing Logo" />
   <h1>SNI-Spoofing-Android</h1>
