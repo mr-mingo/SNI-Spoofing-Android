@@ -41,7 +41,14 @@ data class AppStrings(
     val githubLinkTitle: String,
     val githubSubTitle: String,
     val openGithubBtn: String,
-    val simulatorInfo: String
+    val simulatorInfo: String,
+    val appPreferencesTitle: String,
+    val proxyConfigTitle: String,
+    val saveChanges: String,
+    val aboutHowItWorksTitle: String,
+    val step1Text: String,
+    val step2Text: String,
+    val step3Text: String
 )
 
 val EnglishStrings = AppStrings(
@@ -83,7 +90,14 @@ val EnglishStrings = AppStrings(
     githubLinkTitle = "Open Source Project",
     githubSubTitle = "SNI-Spoofing by patterniha on GitHub",
     openGithubBtn = "Open Link",
-    simulatorInfo = "INTERACTIVE DPI BYPASS SIMULATOR"
+    simulatorInfo = "INTERACTIVE DPI BYPASS SIMULATOR",
+    appPreferencesTitle = "App Preferences",
+    proxyConfigTitle = "Proxy Configuration",
+    saveChanges = "SAVE",
+    aboutHowItWorksTitle = "How it Works",
+    step1Text = "Run the proxy on background locally. It listens on the specified port.",
+    step2Text = "Use clients like v2ray/sing-box with SNI configs and point target host to 127.0.0.1.",
+    step3Text = "DPI systems will be spoofed as standard SNI headers are safely segmented."
 )
 
 val PersianStrings = AppStrings(
@@ -125,7 +139,14 @@ val PersianStrings = AppStrings(
     githubLinkTitle = "پروژه متن‌باز گیتهاب",
     githubSubTitle = "SNI-Spoofing کاری از patterniha",
     openGithubBtn = "باز کردن لینک",
-    simulatorInfo = "شبیه‌ساز آموزشی دور زدن DPI"
+    simulatorInfo = "شبیه‌ساز آموزشی دور زدن DPI",
+    appPreferencesTitle = "تنظیمات برنامه",
+    proxyConfigTitle = "پیکربندی پروکسی",
+    saveChanges = "ذخیره کردن",
+    aboutHowItWorksTitle = "نحوه راه‌اندازی و استفاده",
+    step1Text = "استارت را بزنید تا برنامه روشن شود، برنامه روی آی‌پی 127.0.0.1 منتظر ترافیک خواهد بود.",
+    step2Text = "در برنامه‌های هیدیفای یا ویتوری کانفیگ SNI دار را وارد کرده اما هاست را 127.0.0.1 و پورت را هم روی پورت برنامه بالا قرار دهید.",
+    step3Text = "مهم: مطمئن شوید ترافیک این اپلیکیشن تانل نمی‌شود و به صورت مستقیم به اینترنت وصل است."
 )
 
 val LocalStrings = staticCompositionLocalOf { EnglishStrings }

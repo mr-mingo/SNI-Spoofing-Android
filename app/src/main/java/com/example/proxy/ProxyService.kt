@@ -44,7 +44,15 @@ class ProxyService : Service() {
             )
 
             startProxy(config)
-            startForeground(1, createNotification())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                try {
+                    startForeground(1, createNotification(), android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+                } catch (e: Exception) {
+                    startForeground(1, createNotification())
+                }
+            } else {
+                startForeground(1, createNotification())
+            }
         } else if (intent?.action == ACTION_STOP) {
             stopProxy()
             stopSelf()

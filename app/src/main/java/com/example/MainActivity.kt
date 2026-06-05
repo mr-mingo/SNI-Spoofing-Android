@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -124,12 +126,26 @@ fun AppRootScreen(
     var fakeSni by remember { mutableStateOf(prefs.getString("fakeSni", "auth.vercel.com") ?: "auth.vercel.com") }
     var customSni by remember { mutableStateOf(prefs.getString("customSni", "") ?: "") }
     var bypassMethod by remember { mutableStateOf(prefs.getString("bypassMethod", "TCP_FRAGMENTATION") ?: "TCP_FRAGMENTATION") }
+    
+    var savedListenPort by remember { mutableStateOf(listenPort) }
+    var savedConnectHost by remember { mutableStateOf(connectHost) }
+    var savedConnectPort by remember { mutableStateOf(connectPort) }
+    var savedFakeSni by remember { mutableStateOf(fakeSni) }
+    var savedCustomSni by remember { mutableStateOf(customSni) }
+    var savedBypassMethod by remember { mutableStateOf(bypassMethod) }
 
     val isDark = themePref == "Dark"
     val navColor = if (isDark) Color(0xFF0D111A) else Color(0xFFFFFFFF)
     val navBorderColor = if (isDark) Color(0xFF1E2638) else Color(0xFFD3DFEB)
     
     val unselectedIconColor = if (isDark) Color(0xFF8D9CB0) else Color(0xFF90A4AE)
+
+    val hasUnsavedChanges = listenPort != savedListenPort ||
+            connectHost != savedConnectHost ||
+            connectPort != savedConnectPort ||
+            fakeSni != savedFakeSni ||
+            customSni != savedCustomSni ||
+            bypassMethod != savedBypassMethod
 
     val activeConfig = remember(listenPort, connectHost, connectPort, fakeSni, customSni, bypassMethod) {
         ProxyConfig(
@@ -152,6 +168,12 @@ fun AppRootScreen(
             putString("bypassMethod", bypassMethod)
             apply()
         }
+        savedListenPort = listenPort
+        savedConnectHost = connectHost
+        savedConnectPort = connectPort
+        savedFakeSni = fakeSni
+        savedCustomSni = customSni
+        savedBypassMethod = bypassMethod
     }
 
     Scaffold(
@@ -272,6 +294,8 @@ fun AppRootScreen(
                                     action = ProxyService.ACTION_STOP
                                 }
                                 context.startService(intent)
+                            } else if (hasUnsavedChanges) {
+                                savePrefs()
                             } else {
                                 savePrefs()
                                 val intent = Intent(context, ProxyService::class.java).apply {
@@ -290,20 +314,28 @@ fun AppRootScreen(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isProxyRunning) Color(0xFFFF2E56) else Color(0xFF00E6FF),
-                            contentColor = Color.Black
+                            containerColor = if (isProxyRunning) Color(0xFFFF2E56) 
+                                             else if (hasUnsavedChanges) Color(0xFF4CAF50)
+                                             else Color(0xFF00E6FF),
+                            contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(8.dp),
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
                     ) {
                         Icon(
-                            imageVector = if (isProxyRunning) Icons.Default.Close else Icons.Default.PlayArrow,
-                            contentDescription = if (isProxyRunning) strings.stop else strings.start,
+                            imageVector = if (isProxyRunning) Icons.Default.Close 
+                                          else if (hasUnsavedChanges) Icons.Default.Check
+                                          else Icons.Default.PlayArrow,
+                            contentDescription = if (isProxyRunning) strings.stop 
+                                                 else if (hasUnsavedChanges) strings.saveChanges
+                                                 else strings.start,
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = if (isProxyRunning) strings.stop else strings.start,
+                            text = if (isProxyRunning) strings.stop 
+                                   else if (hasUnsavedChanges) strings.saveChanges
+                                   else strings.start,
                             fontWeight = FontWeight.Black,
                             fontSize = 12.sp
                         )
@@ -324,17 +356,17 @@ fun AppRootScreen(
                         1 -> LogsScreen(logs, isDark)
                         2 -> SettingsScreen(
                             listenPort = listenPort,
-                            onListenPortChange = { listenPort = it; savePrefs() },
+                            onListenPortChange = { listenPort = it },
                             connectHost = connectHost,
-                            onConnectHostChange = { connectHost = it; savePrefs() },
+                            onConnectHostChange = { connectHost = it },
                             connectPort = connectPort,
-                            onConnectPortChange = { connectPort = it; savePrefs() },
+                            onConnectPortChange = { connectPort = it },
                             fakeSni = fakeSni,
-                            onFakeSniChange = { fakeSni = it; savePrefs() },
+                            onFakeSniChange = { fakeSni = it },
                             customSni = customSni,
-                            onCustomSniChange = { customSni = it; savePrefs() },
+                            onCustomSniChange = { customSni = it },
                             bypassMethod = bypassMethod,
-                            onBypassMethodChange = { bypassMethod = it; savePrefs() },
+                            onBypassMethodChange = { bypassMethod = it },
                             isProxyRunning = isProxyRunning,
                             isDarkTheme = isDark,
                             onThemeChange = onThemeChange,
@@ -661,6 +693,15 @@ fun SettingsScreen(
         }
 
         item {
+            Text(
+                strings.appPreferencesTitle,
+                fontWeight = FontWeight.Bold,
+                color = if (isDarkTheme) Color(0xFF8DABDF) else Color(0xFF0284C7),
+                fontSize = 13.sp
+            )
+        }
+
+        item {
             var expanded by remember { mutableStateOf(false) }
             val options = listOf("Eng", "Fa")
             
@@ -730,6 +771,15 @@ fun SettingsScreen(
         
         item {
             HorizontalDivider(color = subColor.copy(alpha = 0.2f), modifier = Modifier.padding(vertical = 8.dp))
+        }
+
+        item {
+            Text(
+                strings.proxyConfigTitle,
+                fontWeight = FontWeight.Bold,
+                color = if (isDarkTheme) Color(0xFF8DABDF) else Color(0xFF0284C7),
+                fontSize = 13.sp
+            )
         }
 
         item {
@@ -936,6 +986,7 @@ fun AboutScreen(isDark: Boolean) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -970,6 +1021,39 @@ fun AboutScreen(isDark: Boolean) {
         
         Spacer(modifier = Modifier.height(24.dp))
         
+        Column(
+            modifier = Modifier.fillMaxWidth().background(if (isDark) Color(0xFF0D121B) else Color.White, RoundedCornerShape(12.dp)).border(1.dp, if (isDark) Color(0xFF222B3D) else Color(0xFFCBD5E1), RoundedCornerShape(12.dp)).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(strings.aboutHowItWorksTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = textColor)
+            
+            Row(verticalAlignment = Alignment.Top) {
+                Box(modifier = Modifier.size(24.dp).background(Color(0xFF00BFA5), CircleShape), contentAlignment = Alignment.Center) {
+                    Text("1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(strings.step1Text, color = subColor, fontSize = 13.sp, lineHeight = 18.sp)
+            }
+            
+            Row(verticalAlignment = Alignment.Top) {
+                Box(modifier = Modifier.size(24.dp).background(Color(0xFF00BFA5), CircleShape), contentAlignment = Alignment.Center) {
+                    Text("2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(strings.step2Text, color = subColor, fontSize = 13.sp, lineHeight = 18.sp)
+            }
+            
+            Row(verticalAlignment = Alignment.Top) {
+                Box(modifier = Modifier.size(24.dp).background(Color(0xFF00BFA5), CircleShape), contentAlignment = Alignment.Center) {
+                    Text("3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(strings.step3Text, color = subColor, fontSize = 13.sp, lineHeight = 18.sp)
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
         Text(
             strings.simulatorInfo,
             fontWeight = FontWeight.Black,
@@ -987,7 +1071,7 @@ fun AboutScreen(isDark: Boolean) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .height(200.dp)
                 .background(if (isDark) Color(0xFF04060A) else Color(0xFF1E293B), RoundedCornerShape(8.dp))
                 .border(2.dp, if (isDark) Color(0xFF1B2336) else Color(0xFF334155), RoundedCornerShape(8.dp))
                 .clip(RoundedCornerShape(8.dp))
