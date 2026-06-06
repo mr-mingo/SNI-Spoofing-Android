@@ -207,4 +207,3 @@ If you found this project useful and would like to support its development, you 
 `UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN`
 
 Thank you for your support! 🙏
-```
