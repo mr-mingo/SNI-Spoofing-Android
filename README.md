@@ -36,7 +36,7 @@
 </ul>
 
 <h2 style="text-align: right;">📸 تصاویر برنامه</h2>
-<img width="305" height="640" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/1380c201-3955-409e-b9c8-97cd07b85d28" /><img width="305" height="640" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/c631db52-cf09-4a23-9c00-daed715054bd" /><img width="305" height="640" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/c0265cf3-c22f-4946-9e59-ada90973e5fd" />
+<img width="250" height="640" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/1380c201-3955-409e-b9c8-97cd07b85d28" /><img width="250" height="640" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/c631db52-cf09-4a23-9c00-daed715054bd" /><img width="250" height="640" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/c0265cf3-c22f-4946-9e59-ada90973e5fd" />
 
 
 
