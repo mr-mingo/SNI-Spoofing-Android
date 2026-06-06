@@ -35,6 +35,15 @@
   <li>🎛️ <strong>کاشی تنظیمات سریع (QS Tile):</strong> شروع یا توقف فرآیند تونل‌سازی به صورت مستقیم از طریق مرکز کنترل اندروید.</li>
 </ul>
 
+<h2 style="text-align: right;">📸 تصاویر برنامه</h2>
+<div align="center">
+  <img src="URL_SCREENSHOT_1_HERE" width="30%" alt="Screenshot 1" />
+  &nbsp;&nbsp;
+  <img src="URL_SCREENSHOT_2_HERE" width="30%" alt="Screenshot 2" />
+  &nbsp;&nbsp;
+  <img src="URL_SCREENSHOT_3_HERE" width="30%" alt="Screenshot 3" />
+</div>
+
 <h2 style="text-align: right;">📥 چرخه انتشار و نصب</h2>
 <p style="text-align: right;">ما از بخش Releases گیت‌هاب برای توزیع فایل‌های باینری برنامه خود استفاده می‌کنیم:</p>
 <ul style="text-align: right; direction: rtl;">
@@ -104,21 +113,38 @@ cd SNI-Spoofing-Android
 
 <h2 style="text-align: right;">☕ حمایت مالی (Donation)</h2>
 <p style="text-align: right;">
-اگر این پروژه را مفید یافتید و مایلید از توسعه آن حمایت کنید، می‌توانید از طریق یکی از شبکه‌های کریپتوی زیر کمک مالی خود را انجام دهید:
+اگر این پروژه را مفید یافتید و مایلید از توسعه آن حمایت کنید، می‌توانید از طریق یکی از شبکه‌های کریپتوی زیر کمک مالی خود را انجام دهید (با کلیک روی آیکون کنار کد، آدرس کپی می‌شود):
 </p>
 
-<p style="text-align: right; direction: ltr;">
-<strong>ETH, BNB, MATIC network (ERC20, BEP20):</strong><br>
-<code>0x9391475e4606322dc4a35daeef2da16910862afb</code><br><br>
-<strong>TRON network (TRC20):</strong><br>
-<code>TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3</code><br><br>
-<strong>Bitcoin network:</strong><br>
-<code>bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9</code><br><br>
-<strong>Dogecoin network:</strong><br>
-<code>DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK</code><br><br>
-<strong>TON network:</strong><br>
-<code>UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN</code>
-</p>
+<div dir="ltr" style="text-align: left;">
+
+**ETH, BNB, MATIC network (ERC20, BEP20):**
+```text
+0x9391475e4606322dc4a35daeef2da16910862afb
+```
+
+**TRON network (TRC20):**
+```text
+TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
+```
+
+**Bitcoin network:**
+```text
+bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
+```
+
+**Dogecoin network:**
+```text
+DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
+```
+
+**TON network:**
+```text
+UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
+```
+
+</div>
+
 <p style="text-align: right;">از حمایت شما متشکریم! 🙏</p>
 
 </div>
@@ -136,6 +162,15 @@ cd SNI-Spoofing-Android
 * 🎨 **Modern Interface:** Experience a beautifully crafted, minimal, and user-friendly UI built natively using Jetpack Compose (Material 3).
 * 📉 **Real-time Monitoring:** Keep track of live traffic streams, transmitted bytes, and active connection flows through the interactive dashboard.
 * 🎛️ **Quick Settings (QS) Tile:** Start or stop the tunneling process directly from the Android control center.
+
+## 📸 Screenshots
+<div align="center">
+  <img src="URL_SCREENSHOT_1_HERE" width="30%" alt="Screenshot 1" />
+  &nbsp;&nbsp;
+  <img src="URL_SCREENSHOT_2_HERE" width="30%" alt="Screenshot 2" />
+  &nbsp;&nbsp;
+  <img src="URL_SCREENSHOT_3_HERE" width="30%" alt="Screenshot 3" />
+</div>
 
 ## 📥 Release Cycle & Installation
 We utilize GitHub Releases to distribute our application binaries:
@@ -191,19 +226,30 @@ This project is released under the **MIT License**. It is fully open-source and 
 ## ☕ Donation
 If you found this project useful and would like to support its development, you can make a donation in one of the following crypto networks:
 
-**ETH, BNB, MATIC network (ERC20, BEP20):**  
-`0x9391475e4606322dc4a35daeef2da16910862afb`
+**ETH, BNB, MATIC network (ERC20, BEP20):**
+```text
+0x9391475e4606322dc4a35daeef2da16910862afb
+```
 
-**TRON network (TRC20):**  
-`TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3`
+**TRON network (TRC20):**
+```text
+TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
+```
 
-**Bitcoin network:**  
-`bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9`
+**Bitcoin network:**
+```text
+bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
+```
 
-**Dogecoin network:**  
-`DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK`
+**Dogecoin network:**
+```text
+DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
+```
 
-**TON network:**  
-`UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN`
+**TON network:**
+```text
+UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
+```
 
 Thank you for your support! 🙏
+```
