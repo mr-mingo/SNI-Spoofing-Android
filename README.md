@@ -85,16 +85,6 @@ cd SNI-Spoofing-Android
 
 ```
 
----
-
----
-
----
-
----
-
----
-
 **ETH, BNB, MATIC network (ERC20, BEP20):**
 
 ```text
