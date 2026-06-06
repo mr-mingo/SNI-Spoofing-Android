@@ -4,8 +4,7 @@
   <p>🚀 یک کلاینت قدرتمند، سبک و متن‌باز برای دور زدن فیلترینگ و DPI از طریق جعل SNI و فرگمنتیشن در اندروید</p>
 
   <p>
-    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><img src="https://img.shields.io/github/v/release/mr-mingo/SNI-Spoofing-Android?color=38BDF8&label=Release&style=for-the-badge" alt="Release"></a>
-    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mr-mingo/SNI-Spoofing-Android?color=10B981&label=License&style=for-the-badge" alt="License"></a>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><img src="https://img.shields.io/badge/Release-v0.9.0-38BDF8?style=for-the-badge" alt="Release"></a>
     <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/stargazers"><img src="https://img.shields.io/github/stars/mr-mingo/SNI-Spoofing-Android?color=EAB308&label=Stars&logo=github&style=for-the-badge" alt="Stars"></a>
   </p>
 
@@ -90,6 +89,12 @@ cd SNI-Spoofing-Android
 
 ---
 
+---
+
+---
+
+---
+
 **ETH, BNB, MATIC network (ERC20, BEP20):**
 
 ```text
@@ -129,7 +134,7 @@ UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 
 ## 🌟 Introduction
 
-**SNI-Spoofing-Android** is a native, open-source Android application that creates a local proxy tunnel to help you bypass Deep Packet Inspection (DPI) and SNI-based filtering. It uses advanced TCP fragmentation techniques to spoof the Server Name Indication during the TLS handshake.
+**SNI-Spoofing-Android** is a native, open-source Android application that creates a local proxy tunnel to help you bypass Deep Packet Inspection (DPI) and SNI-based filtering. It uses advanced TCP fragmentation techniques to spoof the Server Name Indicator during the TLS handshake.
 The application operates entirely without root permissions and perfectly pairs as a routing overlay for clients like Hiddify or v2rayNG.
 
 ---
