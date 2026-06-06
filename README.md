@@ -21,69 +21,76 @@
 
 <h2 style="text-align: right;">🌟 معرفی پروژه</h2>
 <p style="text-align: right;">
-<strong>SNI-Spoofing-Android</strong> یک اپلیکیشن بومی و اوپن‌سورس اندرویدی است که با ایجاد یک تونل پروکسی محلی (Local Proxy) و استفاده از تکنیک‌های پیشرفته خرد کردن بسته‌ها (TCP Fragmentation) و جعل نام سرور (SNI Spoofing)، به شما اجازه می‌دهد از سد سیستم‌های تحلیل‌گر عمیق بسته‌ها (DPI) عبور کنید.
-</p>
-<p style="text-align: right;">
-این برنامه بدون نیاز به دسترسی روت (Root) کار می‌کند و ابزاری عالی برای استفاده در کنار کلاینت‌هایی مانند Hiddify یا v2rayNG محسوب می‌شود.
+<strong>SNI-Spoofing-Android</strong> یک اپلیکیشن بومی و اوپن‌سورس اندرویدی است که با ایجاد یک تونل پروکسی محلی (Local Proxy) به شما در دور زدن سیستم‌های تحلیل عمیق بسته‌ها (DPI) و فیلترینگ مبتنی بر SNI کمک می‌کند. این برنامه از تکنیک‌های پیشرفته خرد کردن بسته‌های TCP (فرگمنتیشن) برای جعل نام سرور (SNI) در طول دست‌تکانی TLS استفاده می‌کند. اپلیکیشن کاملاً بدون نیاز به دسترسی روت (Root) کار می‌کند و به عنوان یک لایه مسیریابی مکمل در کنار کلاینت‌هایی مانند Hiddify یا v2rayNG به طور بی‌نقص جفت می‌شود.
 </p>
 
 ---
 
 <h2 style="text-align: right;">✨ ویژگی‌های کلیدی</h2>
 <ul style="text-align: right; direction: rtl;">
-  <li>🛡️ <strong>عبور از DPI:</strong> دور زدن محدودیت‌های فیلترینگ مبتنی بر SNI با مکانیسم‌های قطعه‌قطعه کردن بسته‌های اتمیک شبکه (TCP Fragmentation).</li>
-  <li>🧵 <strong>هسته همزمانی و مالتی‌تردینگ بهینه:</strong> لایه سوکت بازنویسی‌شده با ساختار استخر نخ‌های کش‌شده جهت هندل کردن نامحدود اتصالات موازی و همزمان در برنامه‌های سنگین بدون قفل شدن هسته پروکسی.</li>
-  <li>🔋 <strong>مدیریت هوشمند منابع و باتری:</strong> راندمان مصرف انرژی فوق‌العاده بالا به دلیل بستن آنی اتصالات بلاتکلیف و به حداقل رساندن چرخه‌های پردازشی هرز در پس‌زمینه.</li>
-  <li>⚡ <strong>پروکسی لوکال (Loopback):</strong> بدون تداخل با VPN‌های سیستم کار می‌کند و به صورت یک پروکسی واسط در پورت مشخص روی آدرس لوکال (<code>127.0.0.1</code>) اجرا می‌شود.</li>
-  <li>🎨 <strong>رابط کاربری مدرن:</strong> طراحی چشم‌نواز، مینیمال و کاربرپسند توسعه یافته با Jetpack Compose (Material 3).</li>
-  <li>📉 <strong>مانیتورینگ زنده:</strong> مشاهده وضعیت ترافیک مصرفی، اتصالات فعال و تاریخچه لاگ‌ها در لحظه (Real-time).</li>
-  <li>🎛️ <strong>شورتکات تنظیمات سریع (QS Tile):</strong> امکان خاموش/روشن کردن پروکسی از طریق کنترل سنتر اندروید (Quick Settings).</li>
+  <li>🛡️ <strong>دور زدن DPI:</strong> غلبه بر محدودیت‌های فیلترینگ مبتنی بر SNI با استفاده از مکانیسم‌های قدرتمند خرد کردن بسته‌های TCP (فرگمنتیشن).</li>
+  <li>🧵 <strong>مالتی‌تردینگ با کارایی بالا:</strong> قدرت گرفته از معماری استخر نخ‌های کش‌شده سفارشی (Cached Thread Pool)، جهت جلوگیری از قفل شدن سوکت‌های اصلی و مدیریت کارآمد بار اتصالات موازی انبوه.</li>
+  <li>🔋 <strong>مدیریت پیشرفته باتری:</strong> راندمان مصرف انرژی بالا از طریق ردیابی سریع چرخه حیات و قطع فوری سوکت‌های بلاتکلیف یا رها شده.</li>
+  <li>⚡ <strong>پروکسی لوکال (Loopback):</strong> روی آدرس <code>127.0.0.1</code> عمل می‌کند و به صورت غیرتهاجمی بدون دستکاری VpnService سیستم اجرا می‌شود تا تضمین کند هیچ تداخلی با سایر تونل‌های VPN ایجاد نخواهد شد.</li>
+  <li>🎨 <strong>رابط کاربری مدرن:</strong> تجربه یک طراحی بصری چشم‌نواز، مینیمال و کاربرپسند که به صورت بومی با استفاده از Jetpack Compose (Material 3) ساخته شده است.</li>
+  <li>📉 <strong>مانیتورینگ زنده:</strong> ردیابی لحظه‌ای جریان ترافیک زنده، بایت‌های منتقل شده و جریان اتصالات فعال از طریق داشبورد تعاملی.</li>
+  <li>🎛️ <strong>کاشی تنظیمات سریع (QS Tile):</strong> قطع و وصل مستقیم فرآیند تونل‌سازی از طریق مرکز کنترل (کنترل سنتر) اندروید.</li>
 </ul>
 
 ---
 
 <h2 style="text-align: right;">📥 روند انتشار نسخه‌ها و نصب</h2>
-<p style="text-align: right;">ما همواره از سیستم انتشار بومی گیت‌هاب برای ارائه‌ی نسخه‌های برنامه استفاده کرده‌ایم:</p>
+<p style="text-align: right;">ما همواره از سیستم انتشار بومی گیت‌هاب برای توزیع فایل‌های باینری برنامه استفاده کرده‌ایم:</p>
 <ul style="text-align: right; direction: rtl;">
-  <li><strong>نسخه‌های قدیمی (پیش از <code>v0.9.0</code>):</strong> این نسخه‌ها فاقد بهینه‌سازی‌های مدیریت ریسمان (Threads) و حافظه بوده‌اند و به دلیل پدیده اشباع استخر اتصالات، پایداری لازم را در ترافیک‌های سنگین ندارند؛ لذا استفاده از آن‌ها به هیچ وجه توصیه نمی‌شود.</li>
-  <li><strong>نسخه‌های پایدار و بهینه (نسخه <code>v0.9.0</code> و بالاتر):</strong> شامل آخرین متدهای مدیریت پویا، ساختار مالتی‌تردینگِ کش‌شده و بهینه‌سازی‌های جامع باتری هستند.</li>
+  <li><strong>نسخه‌های قدیمی (پیش از <code>v0.9.0</code>):</strong> این بیلدها فاقد بهینه‌سازی‌های بنیادی مدیریت نخ (Threading) بودند و به دلیل پدیده اشباع استخر اتصالات زیر بار سنگین، پایداری لازم را نداشتند؛ لذا استفاده از آن‌ها به هیچ وجه توصیه نمی‌شود.</li>
+  <li><strong>نسخه‌های پایدار و بهینه (`v0.9.0+`):</strong> فایل‌های APK کاملاً تأیید شده و آماده استفاده برای عموم، همراه با همزمانی شبکه سطح پایین بازنویسی‌شده و کاهش چشمگیر مصرف انرژی.</li>
 </ul>
 <p style="text-align: right;">
-تأکید می‌شود که همیشه جدیدترین نسخه پایدار را دریافت کنید. بدین منظور به بخش <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><strong>Releases</strong></a> در همین مخزن بروید، آخرین فایل <code>.apk</code> را دانلود و روی گوشی خود نصب کنید.
+به بخش <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><strong>Releases</strong></a> در همین مخزن بروید، آخرین فایل <code>.apk</code> را دانلود و روی دستگاه اندرویدی خود نصب کنید.
 </p>
 
 ---
 
 <h2 style="text-align: right;">🛠 ابعاد فنی و معماری</h2>
 <p style="text-align: right;">
-این برنامه با عبور از لایه‌های محدودکننده استاندارد اندروید طراحی شده است. در نسخه‌های اخیر، هسته سوکت برنامه از لایه دیسپچر خروجی/ورودی کوروتین (مانند <code>Dispatchers.IO</code> با سقف محدود ۶۴ نخ پردازشی) فراتر رفته و به ساختار <code>Cached Thread Pool</code> مجهز شده است تا با تخصیص داینامیک ریسمان مستقل به هر سوکتِ پذیرفته‌شده، مانع از پدیده گرسنگی نخ‌ها (Thread Starvation) و قفل شدن کل اپلیکیشن در درخواست‌های همزمان بالا (مانند اسکرول اینستاگرام) شود.
+حلقه اصلی شبکه برای عبور از محدودیت‌های استاندارد کوروتین‌های اندروید به شدت بازمهندسی شده است. به جای استفاده از دیسپچرهای پیش‌فرض کوروتین (مانند <code>Dispatchers.IO</code> که اجرای برنامه‌ها را به سقف ۶۴ نخ موازی محدود می‌کند)، هسته شبکه از یک استخر نخ کش‌شده ناهمگام مبتنی بر جاوا (<code>Cached Thread Pool</code>) از طریق <code>Executors</code> بهره می‌برد. این کار تخصیص پویای نخ را برای هر سوکت پذیرفته‌شده تضمین می‌کند و پدیده گرسنگی نخ (Thread Starvation) و قفل شدن اپلیکیشن در هنگام بارگذاری سریع و متوالی محتوا (مانند استریم یا دانلود) را کاملاً از بین می‌برد.
 </p>
-<p style="text-align: right;"><strong>کتابخانه‌ها و فریم‌ورک‌های مورد استفاده:</strong></p>
+<p style="text-align: right;"><strong>کتابخانه‌ها و فناوری‌های مورد استفاده:</strong></p>
 <ul style="text-align: right; direction: rtl;">
-  <li><strong>Kotlin (Coroutines & Executors):</strong> مدیریت ریسمان‌ها در سطح بومی سیستم‌عامل و پیاده‌سازی اتصالات ناهمگام غیرانسدادی با ترکیب Coroutines و استخرهای سفارشی جاوا.</li>
-  <li><strong>Jetpack Compose:</strong> فریم‌ورک اصلی برای ساخت رابط کاربری (UI) مدرن، دوزبانه و واکنشی بدون استفاده از لایه‌های سنگین XML.</li>
-  <li><strong>Android Service & Foreground Notifications:</strong> جهت تداوم فعالیت پروکسی لوکال در پس‌زمینه و جلوگیری از کشته شدن پروسس شبکه توسط سیستم مدیریت حافظه اندروید.</li>
-  <li><strong>TileService API:</strong> همگام‌سازی کاشی منوی تنظیمات سریع با ساختار وکتور تطبیق‌پذیر با تم سیستمی دستگاه.</li>
-  <li><strong>Low-Level Network Sockets:</strong> پیاده‌سازی مستقیم سوکت‌های سطح پایین پروتکل TCP برای شنود، رله ترافیک و تزریق قطعات فرگمنتیشن در طول دست‌تکانی TLS.</li>
+  <li><strong>کاتلین (Coroutines & Executors):</strong> پیاده‌سازی هسته بک‌اند با ترکیب کوروتین‌های استاندارد و اکزکیوتورهای داینامیک سطح پایین جاوا برای پردازش ایمن و موازی سوکت‌ها.</li>
+  <li><strong>جت‌پک کامپوز (Jetpack Compose):</strong> ابزار پیشرفته اندروید برای ساخت یک رابط کاربری تعاملی، واکنش‌گرا و مدرن در فرانت‌اند.</li>
+  <li><strong>سرویس‌های بومی اندروید (Native Services):</strong> بهره‌گیری از Foreground Services و سیستم اعلان‌ها برای حفظ تداوم فعالیت سوکت‌ها و رله‌های شبکه بدون بسته شدن توسط مدیریت حافظه سیستم‌عامل.</li>
+  <li><strong>سرویس کاشی (TileService):</strong> ادغام عمیق با زیرساخت اندروید جهت ارائه یک شورتکات کاربردی در منوی تنظیمات سریع (Quick Settings).</li>
+  <li><strong>سوکت‌های سفارشی (Custom Sockets):</strong> پیاده‌سازی مستقیم سوکت‌های شبکه سطح پایین جاوا برای پردازش استریم‌های TCP و اعمال منطق فرگمنتیشن سفارشی در طول مسیر ارسال ترافیک.</li>
 </ul>
 
 ---
 
 <h2 style="text-align: right;">🚀 نصب و راه‌اندازی (Development)</h2>
-<p style="text-align: right;">برای اجرای سورس کد روی ماشین توسعه خودت، مراحل زیر را طی کن:</p>
+<p style="text-align: right;">برای بیلد و تست کدها به صورت محلی، مراحل استاندارد گریدل را اجرا کنید:</p>
 
 ```bash
-# 1. مخزن را کلون کنید
+# ۱. مخزن را کلون کنید
 git clone [https://github.com/mr-mingo/SNI-Spoofing-Android.git](https://github.com/mr-mingo/SNI-Spoofing-Android.git)
 
-# 2. وارد پوشه پروژه شوید
+# ۲. وارد پوشه پروژه شوید
 cd SNI-Spoofing-Android
 
-# 3. با استفاده از گریدل پروژه را بیلد کنید
-# اطمینان حاصل کنید که جاوا 11+ یا جدیدتر روی سیستم نصب باشد
+# ۳. پروژه را اسمبل کنید
+# اطمینان حاصل کنید که جاوا ۱۱ یا جدیدتر در محیط شما نصب باشد
 ./gradlew assembleDebug
 
 ```
+
+---
+
+---
+
+---
+
+---
+
+---
 
 **ETH, BNB, MATIC network (ERC20, BEP20):**
 
@@ -124,8 +131,7 @@ UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 
 ## 🌟 Introduction
 
-**SNI-Spoofing-Android** is a native, open-source Android application that creates a local proxy tunnel to help you bypass Deep Packet Inspection (DPI) and SNI-based filtering. It uses advanced TCP fragmentation techniques to spoof the Server Name Indicator during the TLS handshake.
-The application operates entirely without root permissions and perfectly pairs as a routing overlay for clients like Hiddify or v2rayNG.
+**SNI-Spoofing-Android** is a native, open-source Android application that creates a local proxy tunnel to help you bypass Deep Packet Inspection (DPI) and SNI-based filtering. It uses advanced TCP fragmentation techniques to spoof the Server Name Indication during the TLS handshake. The application operates entirely without root permissions and perfectly pairs as a routing overlay for clients like Hiddify or v2rayNG.
 
 ---
 
@@ -259,5 +265,6 @@ UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 Thank you for your support! 🙏
 
 ```
+---
 
 ```
