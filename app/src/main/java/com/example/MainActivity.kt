@@ -2,12 +2,17 @@ package com.example
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.Manifest
+import android.os.Build
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
@@ -38,6 +43,7 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -57,6 +63,9 @@ import com.example.ui.PersianStrings
 import com.example.ui.theme.MyApplicationTheme
 import java.util.Locale
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.core.content.ContextCompat
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,11 +74,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             val prefs = remember { getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
             
-            var language by remember { mutableStateOf(prefs.getString("lang", "Eng") ?: "Eng") }
-            var themePref by remember { mutableStateOf(prefs.getString("theme", "Dark") ?: "Dark") }
+            var language by remember { mutableStateOf(prefs.getString("lang", "System") ?: "System") }
+            var themePref by remember { mutableStateOf(prefs.getString("theme", "System") ?: "System") }
 
-            val isDarkTheme = themePref == "Dark"
-            val isFarsi = language == "Fa"
+            val systemInDarkTheme = isSystemInDarkTheme()
+            val isDarkTheme = when (themePref) {
+                "Dark" -> true
+                "Light" -> false
+                else -> systemInDarkTheme
+            }
+
+            val systemLang = Locale.getDefault().language
+            val isFarsi = when (language) {
+                "Fa" -> true
+                "Eng" -> false
+                else -> systemLang == "fa"
+            }
 
             MyApplicationTheme(darkTheme = isDarkTheme) {
                 CompositionLocalProvider(
@@ -109,6 +129,16 @@ fun AppRootScreen(
     themePref: String,
     prefs: android.content.SharedPreferences
 ) {
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { }
+    
+    LaunchedEffect(Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     val context = LocalContext.current
     val strings = LocalStrings.current
     var selectedTab by remember { mutableStateOf(0) }
@@ -134,7 +164,9 @@ fun AppRootScreen(
     var savedCustomSni by remember { mutableStateOf(customSni) }
     var savedBypassMethod by remember { mutableStateOf(bypassMethod) }
 
-    val isDark = themePref == "Dark"
+    val systemInDarkTheme = androidx.compose.foundation.isSystemInDarkTheme()
+    val isDark = if (themePref == "System") systemInDarkTheme else themePref == "Dark"
+    
     val navColor = if (isDark) Color(0xFF0D111A) else Color(0xFFFFFFFF)
     val navBorderColor = if (isDark) Color(0xFF1E2638) else Color(0xFFD3DFEB)
     
@@ -305,6 +337,9 @@ fun AppRootScreen(
                                     putExtra(ProxyService.KEY_CONNECT_PORT, activeConfig.connectPort)
                                     putExtra(ProxyService.KEY_FAKE_SNI, activeConfig.fakeSni)
                                     putExtra(ProxyService.KEY_STRATEGY, activeConfig.bypassMethod)
+                                    putExtra(ProxyService.KEY_NOTIF_TITLE, strings.notificationTitle)
+                                    putExtra(ProxyService.KEY_NOTIF_TEXT, strings.notificationText)
+                                    putExtra(ProxyService.KEY_NOTIF_STOP, strings.stop)
                                 }
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                     context.startForegroundService(intent)
@@ -369,6 +404,7 @@ fun AppRootScreen(
                             onBypassMethodChange = { bypassMethod = it },
                             isProxyRunning = isProxyRunning,
                             isDarkTheme = isDark,
+                            themePref = themePref,
                             onThemeChange = onThemeChange,
                             language = language,
                             onLanguageChange = onLanguageChange
@@ -532,6 +568,51 @@ fun DashboardScreen(
             )
             
             Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (isDark) Color(0xFF2E1065) else Color(0xFFEDE9FE))
+                        .border(1.dp, if (isDark) Color(0xFF4C1D95) else Color(0xFFDDD6FE), RoundedCornerShape(8.dp))
+                        .clickable {
+                            clipboardManager.setText(AnnotatedString("127.0.0.1"))
+                            Toast.makeText(context, "Host copied!", Toast.LENGTH_SHORT).show()
+                        }
+                        .padding(vertical = 12.dp, horizontal = 8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Host", fontSize = 11.sp, color = if(isDark) Color(0xFFA78BFA) else Color(0xFF7C3AED), fontWeight = FontWeight.Bold)
+                        Text("127.0.0.1", fontSize = 14.sp, color = if(isDark) Color.White else Color(0xFF4C1D95), fontWeight = FontWeight.Black)
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (isDark) Color(0xFF064E3B) else Color(0xFFD1FAE5))
+                        .border(1.dp, if (isDark) Color(0xFF047857) else Color(0xFFA7F3D0), RoundedCornerShape(8.dp))
+                        .clickable {
+                            clipboardManager.setText(AnnotatedString(activeConfig.listenPort.toString()))
+                            Toast.makeText(context, "Port copied!", Toast.LENGTH_SHORT).show()
+                        }
+                        .padding(vertical = 12.dp, horizontal = 8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Port", fontSize = 11.sp, color = if(isDark) Color(0xFF34D399) else Color(0xFF059669), fontWeight = FontWeight.Bold)
+                        Text("${activeConfig.listenPort}", fontSize = 14.sp, color = if(isDark) Color.White else Color(0xFF064E3B), fontWeight = FontWeight.Black)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
                     clipboardManager.setText(AnnotatedString("127.0.0.1:${activeConfig.listenPort}"))
@@ -672,6 +753,7 @@ fun SettingsScreen(
     onBypassMethodChange: (String) -> Unit,
     isProxyRunning: Boolean,
     isDarkTheme: Boolean,
+    themePref: String,
     onThemeChange: (String) -> Unit,
     language: String,
     onLanguageChange: (String) -> Unit
@@ -703,7 +785,7 @@ fun SettingsScreen(
 
         item {
             var expanded by remember { mutableStateOf(false) }
-            val options = listOf("Eng", "Fa")
+            val options = listOf("System", "Eng", "Fa")
             
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -711,7 +793,7 @@ fun SettingsScreen(
             ) {
                 OutlinedTextField(
                     readOnly = true,
-                    value = if (language == "Fa") "فارسی" else "English",
+                    value = if (language == "Fa") "فارسی" else if(language == "Eng") "English" else strings.systemDefault,
                     onValueChange = {},
                     label = { Text(strings.languageLabel) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -724,7 +806,7 @@ fun SettingsScreen(
                 ) {
                     options.forEach { selectionOption ->
                         DropdownMenuItem(
-                            text = { Text(if (selectionOption == "Fa") "فارسی" else "English") },
+                            text = { Text(if (selectionOption == "Fa") "فارسی" else if(selectionOption == "Eng") "English" else strings.systemDefault) },
                             onClick = {
                                 onLanguageChange(selectionOption)
                                 expanded = false
@@ -737,7 +819,7 @@ fun SettingsScreen(
 
         item {
             var expanded by remember { mutableStateOf(false) }
-            val options = listOf("Dark", "Light")
+            val options = listOf("System", "Dark", "Light")
             
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -745,7 +827,7 @@ fun SettingsScreen(
             ) {
                 OutlinedTextField(
                     readOnly = true,
-                    value = themePrefToText(themePref = themePrefToText(themePref = if(isDarkTheme) "Dark" else "Light", false), isFarsi = language == "Fa"),
+                    value = if (themePref == "System") strings.systemDefault else themePrefToText(themePref = themePref, isFarsi = language == "Fa"),
                     onValueChange = {},
                     label = { Text(strings.themeLabel) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -758,7 +840,7 @@ fun SettingsScreen(
                 ) {
                     options.forEach { selectionOption ->
                         DropdownMenuItem(
-                            text = { Text(themePrefToText(themePref = selectionOption, isFarsi = language == "Fa")) },
+                            text = { Text(if(selectionOption == "System") strings.systemDefault else themePrefToText(themePref = selectionOption, isFarsi = language == "Fa")) },
                             onClick = {
                                 onThemeChange(selectionOption)
                                 expanded = false
@@ -979,7 +1061,8 @@ private fun bytesToSymbolicString(bytes: Long): String {
 fun AboutScreen(isDark: Boolean) {
     val context = LocalContext.current
     val strings = LocalStrings.current
-    val uri = Uri.parse("https://github.com/patterniha/SNI-Spoofing")
+    val uriAuthor = Uri.parse("https://github.com/mr-mingo/SNI-Spoofing-Android")
+    val uriPatterniha = Uri.parse("https://github.com/patterniha/SNI-Spoofing")
     val textColor = if (isDark) Color.White else Color(0xFF1E293B)
     val subColor = if (isDark) Color(0xFF8A98B0) else Color(0xFF64748B)
 
@@ -993,10 +1076,10 @@ fun AboutScreen(isDark: Boolean) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         
+        // Author Card
         Card(
             modifier = Modifier.fillMaxWidth().clickable {
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                context.startActivity(intent)
+                context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor))
             },
             colors = CardDefaults.cardColors(containerColor = if (isDark) Color(0xFF0D121B) else Color.White),
             border = BorderStroke(1.dp, if (isDark) Color(0xFF222B3D) else Color(0xFFCBD5E1))
@@ -1005,14 +1088,50 @@ fun AboutScreen(isDark: Boolean) {
                 modifier = Modifier.padding(24.dp).fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFACC15), modifier = Modifier.size(48.dp))
+                Icon(
+                    androidx.compose.ui.res.painterResource(id = R.drawable.ic_github), 
+                    contentDescription = null, 
+                    tint = if (isDark) Color.White else Color.Black, 
+                    modifier = Modifier.size(48.dp)
+                )
                 Spacer(modifier = Modifier.height(12.dp))
-                Text(strings.githubLinkTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
-                Text(strings.githubSubTitle, fontSize = 14.sp, color = subColor)
+                Text(strings.authorGithubTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
+                Text(strings.authorGithubSubTitle, fontSize = 14.sp, color = subColor, textAlign = TextAlign.Center)
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, uri)) },
+                    onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00BFA5))
+                ) {
+                    Text(strings.openGithubBtn, color = Color.White, fontWeight = FontWeight.Bold)
+                }
+            }
+        }
+
+        // Patterniha Card
+        Card(
+            modifier = Modifier.fillMaxWidth().clickable {
+                context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha))
+            },
+            colors = CardDefaults.cardColors(containerColor = if (isDark) Color(0xFF0D121B) else Color.White),
+            border = BorderStroke(1.dp, if (isDark) Color(0xFF222B3D) else Color(0xFFCBD5E1))
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp).fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    androidx.compose.ui.res.painterResource(id = R.drawable.ic_github), 
+                    contentDescription = null, 
+                    tint = if (isDark) Color.White else Color.Black, 
+                    modifier = Modifier.size(48.dp)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(strings.poweredByTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
+                Text(strings.poweredBySubTitle, fontSize = 14.sp, color = subColor, textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D9488))
                 ) {
                     Text(strings.openGithubBtn, color = Color.White, fontWeight = FontWeight.Bold)
                 }
@@ -1021,100 +1140,96 @@ fun AboutScreen(isDark: Boolean) {
         
         Spacer(modifier = Modifier.height(24.dp))
         
-        Column(
-            modifier = Modifier.fillMaxWidth().background(if (isDark) Color(0xFF0D121B) else Color.White, RoundedCornerShape(12.dp)).border(1.dp, if (isDark) Color(0xFF222B3D) else Color(0xFFCBD5E1), RoundedCornerShape(12.dp)).padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Text(strings.aboutHowItWorksTitle, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = textColor)
-            
-            Row(verticalAlignment = Alignment.Top) {
-                Box(modifier = Modifier.size(24.dp).background(Color(0xFF00BFA5), CircleShape), contentAlignment = Alignment.Center) {
-                    Text("1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
-                }
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(strings.step1Text, color = subColor, fontSize = 13.sp, lineHeight = 18.sp)
-            }
-            
-            Row(verticalAlignment = Alignment.Top) {
-                Box(modifier = Modifier.size(24.dp).background(Color(0xFF00BFA5), CircleShape), contentAlignment = Alignment.Center) {
-                    Text("2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
-                }
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(strings.step2Text, color = subColor, fontSize = 13.sp, lineHeight = 18.sp)
-            }
-            
-            Row(verticalAlignment = Alignment.Top) {
-                Box(modifier = Modifier.size(24.dp).background(Color(0xFF00BFA5), CircleShape), contentAlignment = Alignment.Center) {
-                    Text("3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
-                }
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(strings.step3Text, color = subColor, fontSize = 13.sp, lineHeight = 18.sp)
-            }
-        }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
         Text(
             strings.simulatorInfo,
             fontWeight = FontWeight.Black,
             color = textColor,
-            fontSize = 14.sp,
+            fontSize = 18.sp,
             letterSpacing = 1.sp
         )
         Text(
-            "Visual diagram of DPI mechanisms",
+            strings.connectionTipBody,
             color = subColor,
-            fontSize = 12.sp
+            fontSize = 13.sp,
+            lineHeight = 20.sp,
+            textAlign = TextAlign.Center
         )
 
-        // Animated State diagram
+        // Animated State diagram with Vectors
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
-                .background(if (isDark) Color(0xFF04060A) else Color(0xFF1E293B), RoundedCornerShape(8.dp))
-                .border(2.dp, if (isDark) Color(0xFF1B2336) else Color(0xFF334155), RoundedCornerShape(8.dp))
-                .clip(RoundedCornerShape(8.dp))
+                .height(240.dp)
+                .background(if (isDark) Color(0xFF04060A) else Color(0xFFF1F5F9), RoundedCornerShape(12.dp))
+                .border(2.dp, if (isDark) Color(0xFF1B2336) else Color(0xFFE2E8F0), RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(12.dp))
         ) {
+            // Background Paths
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val width = size.width
                 val height = size.height
-
-                // Draw Nodes
                 val yMid = height * 0.45f
                 val clientX = width * 0.15f
                 val dpiX = width * 0.5f
                 val serverX = width * 0.85f
 
-                drawCircle(color = Color(0xFF13223A), radius = 24.dp.toPx(), center = Offset(clientX, yMid))
-                drawCircle(color = Color(0xFF331621), radius = 24.dp.toPx(), center = Offset(dpiX, yMid))
-                drawCircle(color = Color(0xFF122C24), radius = 24.dp.toPx(), center = Offset(serverX, yMid))
+                drawLine(
+                    color = Color(0xFF64748B),
+                    start = Offset(clientX, yMid),
+                    end = Offset(serverX, yMid),
+                    strokeWidth = 4f,
+                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(15f, 15f))
+                )
 
-                drawLine(
-                    color = Color(0xFF1E273A),
-                    start = Offset(clientX + 24.dp.toPx(), yMid),
-                    end = Offset(dpiX - 24.dp.toPx(), yMid),
-                    strokeWidth = 3f,
-                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
-                )
-                drawLine(
-                    color = Color(0xFF1E273A),
-                    start = Offset(dpiX + 24.dp.toPx(), yMid),
-                    end = Offset(serverX - 24.dp.toPx(), yMid),
-                    strokeWidth = 3f,
-                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
-                )
-             
-                // Draw Android Simulation Path statically
-                drawArrow(clientX + 24.dp.toPx(), dpiX - 50.dp.toPx(), yMid, Color(0xFFFF9800), this)
-                drawArrow(clientX + 24.dp.toPx(), dpiX - 24.dp.toPx(), yMid, Color(0xFFFFEB3B), this)
+                // draw lines simulating traffic flow
+                drawArrow(clientX + 24.dp.toPx(), dpiX - 35.dp.toPx(), yMid - 15.dp.toPx(), Color(0xFFFF9800), this)
+                drawArrow(clientX + 24.dp.toPx(), dpiX - 15.dp.toPx(), yMid, Color(0xFFFFEB3B), this)
                 drawArrow(dpiX + 24.dp.toPx(), serverX - 24.dp.toPx(), yMid, Color(0xFF00FFCC), this)
             }
 
+            // Client Component
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .offset(x = 16.dp, y = (-20).dp)
+                    .size(64.dp)
+                    .background(Color(0xFF1E293B), CircleShape)
+                    .border(2.dp, Color(0xFF475569), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Default.Phone, contentDescription = "Client", tint = Color.White, modifier = Modifier.size(32.dp))
+            }
+
+            // DPI Component
+            Box(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .offset(y = (-20).dp)
+                    .size(64.dp)
+                    .background(Color(0xFF4C0519), CircleShape)
+                    .border(2.dp, Color(0xFF881F3B), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Default.Warning, contentDescription = "DPI", tint = Color(0xFFFDA4AF), modifier = Modifier.size(32.dp))
+            }
+
+            // Server Component
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .offset(x = (-16).dp, y = (-20).dp)
+                    .size(64.dp)
+                    .background(Color(0xFF064E3B), CircleShape)
+                    .border(2.dp, Color(0xFF047857), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Default.Share, contentDescription = "Server", tint = Color(0xFF6EE7B7), modifier = Modifier.size(32.dp))
+            }
+
             // Simple labels inside container
-            LabelNode("CLIENT", Alignment.CenterStart, Modifier.padding(start = 12.dp))
-            LabelNode("FIREWALL (DPI)", Alignment.Center, Modifier.offset(y = (-55).dp))
-            LabelNode("TARGET SERVER", Alignment.CenterEnd, Modifier.padding(end = 12.dp))
+            LabelNode("CLIENT", Alignment.CenterStart, Modifier.padding(start = 22.dp).offset(y = 35.dp))
+            LabelNode("FIREWALL (DPI)", Alignment.Center, Modifier.offset(y = 35.dp))
+            LabelNode("TARGET SERVER", Alignment.CenterEnd, Modifier.padding(end = 12.dp).offset(y = 35.dp))
         }
     }
 }
@@ -1124,10 +1239,9 @@ fun BoxScope.LabelNode(name: String, alignment: Alignment, modifier: Modifier = 
     Box(
         modifier = modifier
             .align(alignment)
-            .background(Color(0xFF1A2234), RoundedCornerShape(4.dp))
-            .border(1.dp, Color(0xFF2B3750), RoundedCornerShape(4.dp))
-            .padding(horizontal = 6.dp, vertical = 2.dp)
-            .offset(y = 35.dp)
+            .background(Color(0xFF0F172A), RoundedCornerShape(4.dp))
+            .border(1.dp, Color(0xFF334155), RoundedCornerShape(4.dp))
+            .padding(horizontal = 6.dp, vertical = 4.dp)
     ) {
         Text(name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.Black, fontFamily = FontFamily.Monospace)
     }

@@ -24,7 +24,14 @@ class ProxyService : Service() {
         const val KEY_CONNECT_PORT = "KEY_CONNECT_PORT"
         const val KEY_FAKE_SNI = "KEY_FAKE_SNI"
         const val KEY_STRATEGY = "KEY_STRATEGY"
+        const val KEY_NOTIF_TITLE = "KEY_NOTIF_TITLE"
+        const val KEY_NOTIF_TEXT = "KEY_NOTIF_TEXT"
+        const val KEY_NOTIF_STOP = "KEY_NOTIF_STOP"
     }
+
+    private var notifTitle = "SNI Spoofing is Active"
+    private var notifText = "Local proxy tunnel is running."
+    private var notifStop = "STOP SPOOFING"
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_START) {
@@ -33,6 +40,9 @@ class ProxyService : Service() {
             val connectPort = intent.getIntExtra(KEY_CONNECT_PORT, 443)
             val fakeSni = intent.getStringExtra(KEY_FAKE_SNI) ?: "auth.vercel.com"
             val bypassMethod = intent.getStringExtra(KEY_STRATEGY) ?: "TCP_FRAGMENTATION"
+            notifTitle = intent.getStringExtra(KEY_NOTIF_TITLE) ?: notifTitle
+            notifText = intent.getStringExtra(KEY_NOTIF_TEXT) ?: notifText
+            notifStop = intent.getStringExtra(KEY_NOTIF_STOP) ?: notifStop
 
             val config = ProxyConfig(
                 listenHost = "127.0.0.1",
@@ -111,11 +121,11 @@ class ProxyService : Service() {
         val stopPendingIntent = PendingIntent.getService(this, 1, stopIntent, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, channelId)
-            .setContentTitle("SNI Spoofing is Active")
-            .setContentText("Local proxy tunnel is running.")
+            .setContentTitle(notifTitle)
+            .setContentText(notifText)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentIntent(pendingIntent)
-            .addAction(android.R.drawable.ic_delete, "Stop Proxy", stopPendingIntent)
+            .addAction(android.R.drawable.ic_delete, notifStop, stopPendingIntent)
             .setOngoing(true)
             .build()
     }

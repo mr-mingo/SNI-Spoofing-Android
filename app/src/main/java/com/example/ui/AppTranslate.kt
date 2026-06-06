@@ -45,10 +45,13 @@ data class AppStrings(
     val appPreferencesTitle: String,
     val proxyConfigTitle: String,
     val saveChanges: String,
-    val aboutHowItWorksTitle: String,
-    val step1Text: String,
-    val step2Text: String,
-    val step3Text: String
+    val systemDefault: String,
+    val authorGithubTitle: String,
+    val authorGithubSubTitle: String,
+    val poweredByTitle: String,
+    val poweredBySubTitle: String,
+    val notificationTitle: String,
+    val notificationText: String
 )
 
 val EnglishStrings = AppStrings(
@@ -58,7 +61,7 @@ val EnglishStrings = AppStrings(
     settings = "Settings",
     about = "About",
     start = "START",
-    stop = "STOP",
+    stop = "STOP SPOOFING",
     txTitle = "Transmitted (TX)",
     rxTitle = "Received (RX)",
     activeFlows = "ACTIVE FLOWS",
@@ -90,24 +93,27 @@ val EnglishStrings = AppStrings(
     githubLinkTitle = "Open Source Project",
     githubSubTitle = "SNI-Spoofing by patterniha on GitHub",
     openGithubBtn = "Open Link",
-    simulatorInfo = "INTERACTIVE DPI BYPASS SIMULATOR",
+    simulatorInfo = "How it works?",
     appPreferencesTitle = "App Preferences",
     proxyConfigTitle = "Proxy Configuration",
     saveChanges = "SAVE",
-    aboutHowItWorksTitle = "How it Works",
-    step1Text = "Run the proxy on background locally. It listens on the specified port.",
-    step2Text = "Use clients like v2ray/sing-box with SNI configs and point target host to 127.0.0.1.",
-    step3Text = "DPI systems will be spoofed as standard SNI headers are safely segmented."
+    systemDefault = "System Default",
+    authorGithubTitle = "Author",
+    authorGithubSubTitle = "SNI-Spoofing-Android by Mr-MinGo",
+    poweredByTitle = "Powered By",
+    poweredBySubTitle = "Core logic based on SNI-Spoofing by patterniha",
+    notificationTitle = "SNI Spoofing is Active",
+    notificationText = "Proxy is running in the background on 127.0.0.1"
 )
 
 val PersianStrings = AppStrings(
-    appName = "دور زدن SNI",
+    appName = "SNI Spoofing",
     dashboard = "داشبورد",
     logs = "لاگ‌ها",
     settings = "تنظیمات",
     about = "درباره",
     start = "شروع",
-    stop = "توقف",
+    stop = "STOP SPOOFING",
     txTitle = "ارسال شده (TX)",
     rxTitle = "دریافت شده (RX)",
     activeFlows = "اتصالات فعال",
@@ -139,14 +145,17 @@ val PersianStrings = AppStrings(
     githubLinkTitle = "پروژه متن‌باز گیتهاب",
     githubSubTitle = "SNI-Spoofing کاری از patterniha",
     openGithubBtn = "باز کردن لینک",
-    simulatorInfo = "شبیه‌ساز آموزشی دور زدن DPI",
+    simulatorInfo = "چطوری کار می‌کنه؟ (How it works)",
     appPreferencesTitle = "تنظیمات برنامه",
     proxyConfigTitle = "پیکربندی پروکسی",
     saveChanges = "ذخیره کردن",
-    aboutHowItWorksTitle = "نحوه راه‌اندازی و استفاده",
-    step1Text = "استارت را بزنید تا برنامه روشن شود، برنامه روی آی‌پی 127.0.0.1 منتظر ترافیک خواهد بود.",
-    step2Text = "در برنامه‌های هیدیفای یا ویتوری کانفیگ SNI دار را وارد کرده اما هاست را 127.0.0.1 و پورت را هم روی پورت برنامه بالا قرار دهید.",
-    step3Text = "مهم: مطمئن شوید ترافیک این اپلیکیشن تانل نمی‌شود و به صورت مستقیم به اینترنت وصل است."
+    systemDefault = "پیش‌فرض سیستم",
+    authorGithubTitle = "توسعه‌دهنده",
+    authorGithubSubTitle = "پروژه اندروید توسط Mr-MinGo",
+    poweredByTitle = "قدرت گرفته از",
+    poweredBySubTitle = "منطق اصلی بر اساس کد patterniha",
+    notificationTitle = "دور زدن کلاینت فعال است",
+    notificationText = "پروکسی در پس‌زمینه روی 127.0.0.1 در حال اجراست"
 )
 
 val LocalStrings = staticCompositionLocalOf { EnglishStrings }
