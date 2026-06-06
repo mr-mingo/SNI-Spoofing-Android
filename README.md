@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/mr-mingo/SNI-Spoofing-Android/refs/heads/main/app/src/main/res/drawable/app_icon_sp_1780550720701.png" width="180" style="border-radius: 20px;" alt="SNI Spoofing Logo" />
+  <img src="https://raw.githubusercontent.com/mr-mingo/SNI-Spoofing-Android/refs/heads/main/app/src/main/res/drawable/app_icon_sp_1780550720701.png" width="360" style="border-radius: 40px;" alt="SNI Spoofing Logo" />
   <h1>SNI-Spoofing-Android</h1>
   <p>🚀 یک کلاینت قدرتمند، سبک و متن‌باز برای دور زدن فیلترینگ و DPI از طریق جعل SNI و فرگمنتیشن در اندروید</p>
 
