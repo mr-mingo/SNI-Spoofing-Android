@@ -1,16 +1,16 @@
 <div align="center">
-  <img src="https://img.icons8.com/color/144/shield.png" alt="SNI Spoofing Logo" />
+  <img src="https://raw.githubusercontent.com/mr-mingo/SNI-Spoofing-Android/refs/heads/main/app/src/main/res/drawable/app_icon_sp_1780550720701.png" width="144" alt="SNI Spoofing Logo" />
   <h1>SNI-Spoofing-Android</h1>
-  <p>🚀 یک کلاینت قدرتمند، سبک و متنباز برای دور زدن فیلترینگ و DPI از طریق جعل SNI و فرگمنتیشن در اندروید</p>
+  <p>🚀 یک کلاینت قدرتمند، سبک و متن‌باز برای دور زدن فیلترینگ و DPI از طریق جعل SNI و فرگمنتیشن در اندروید</p>
 
   <p>
-    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><img src="https://img.shields.io/github/v/release/mr-mingo/SNI-Spoofing-Android?color=38BDF8&label=نسخه&style=for-the-badge" alt="Release"></a>
-    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mr-mingo/SNI-Spoofing-Android?color=10B981&label=لایسنس&style=for-the-badge" alt="License"></a>
-    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/stargazers"><img src="https://img.shields.io/github/stars/mr-mingo/SNI-Spoofing-Android?color=EAB308&label=ستاره‌ها&logo=github&style=for-the-badge" alt="Stars"></a>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/releases"><img src="https://img.shields.io/github/v/release/mr-mingo/SNI-Spoofing-Android?color=38BDF8&label=%D9%86%D8%B3%D8%AE%D9%87&style=for-the-badge" alt="Release"></a>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mr-mingo/SNI-Spoofing-Android?color=10B981&label=%D9%84%D8%A7%D9%8A%D8%B3%D9%86%D8%B3&style=for-the-badge" alt="License"></a>
+    <a href="https://github.com/mr-mingo/SNI-Spoofing-Android/stargazers"><img src="https://img.shields.io/github/stars/mr-mingo/SNI-Spoofing-Android?color=EAB308&label=%D8%B3%D8%AA%D8%A7%D8%B1%D9%87%E2%80%8C%D9%87%D8%A7&logo=github&style=for-the-badge" alt="Stars"></a>
   </p>
 
   <p>
-    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square](https://raw.githubusercontent.com/mr-mingo/SNI-Spoofing-Android/refs/heads/main/app/src/main/res/drawable/app_icon_sp_1780550720701.png" alt="License: MIT"></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square" alt="License: MIT"></a>
     <a href="https://developer.android.com"><img src="https://img.shields.io/badge/Platform-Android-green.svg?logo=android&style=flat-square" alt="Android Platform"></a>
     <a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-1.9+-purple.svg?logo=kotlin&style=flat-square" alt="Kotlin"></a>
   </p>
@@ -46,7 +46,7 @@
 <p style="text-align: right;">ما از سیستم ریلیز گیتهاب برای انتشار برنامه‌ها استفاده می‌کنیم:</p>
 <ul style="text-align: right; direction: rtl;">
   <li><strong>نسخه‌های آلفا/بتا (<code>v0.1.0</code> تا <code>v0.9.x</code>):</strong> نسخه‌های آزمایشی و در حال توسعه هستند که تحت عنوان <code>Pre-release</code> منتشر می‌شوند. این نسخه‌ها شامل آخرین تغییرات فنی هستند اما ممکن است باگ داشته باشند.</li>
-  <li><strong>نسخه‌های پایدار (<code>v1.0.0+</code>):</strong> نسخه‌های nهایی، کاملاً تست‌شده و بدون مشکل که برای استفاده عموم آماده هستند.</li>
+  <li><strong>نسخه‌های پایدار (<code>v1.0.0+</code>):</strong> نسخه‌های نهایی، کاملاً تست‌شده و بدون مشکل که برای استفاده عموم آماده هستند.</li>
 </ul>
 <p style="text-align: right;">
 به بخش <strong>Releases</strong> در همین ریپازیتوری بروید، آخرین فایل <code>.apk</code> را دانلود و روی گوشی خود نصب کنید.
@@ -87,40 +87,40 @@ cd SNI-Spoofing-Android
 
 ---
 
----
-
----
-
----
-
----
+**ETH, BNB, MATIC network (ERC20, BEP20):**
 
 ```text
 0x9391475e4606322dc4a35daeef2da16910862afb
 
 ```
 
+**TRON network (TRC20):**
+
 ```text
 TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
 
 ```
+
+**Bitcoin network:**
 
 ```text
 bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
 
 ```
 
+**Dogecoin network:**
+
 ```text
 DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
 
 ```
 
+**TON network:**
+
 ```text
 UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 
 ```
-
----
 
 ---
 
@@ -199,9 +199,9 @@ You can install the generated artifact directly from the `app/build/outputs/apk/
 
 ## 🗺 Roadmap
 
-* [ ] **v0.1.0 - v0.4.0:** Core Kotlin architecture, local proxy service integration, and basic fragmentation backend.
-* [ ] **v0.5.0 - v0.8.0:** Live connection dashboard, Material 3 UI enhancement via Jetpack Compose, and robust log parsing.
-* [ ] **v0.9.x:** Integrated Quick Settings Tile and network preflight testing logic.
+* [x] **v0.1.0 - v0.4.0:** Core Kotlin architecture, local proxy service integration, and basic fragmentation backend.
+* [x] **v0.5.0 - v0.8.0:** Live connection dashboard, Material 3 UI enhancement via Jetpack Compose, and robust log parsing.
+* [x] **v0.9.x:** Integrated Quick Settings Tile, battery optimizations, and custom brand identity icon.
 * [ ] **v1.0.0 (Stable):** Official first stable deployment made available under the Releases block.
 
 ---
@@ -222,35 +222,35 @@ This project is released under the **MIT License**. It is fully open-source and 
 
 If you found this project useful and would like to support its development, you can make a donation in one of the following crypto networks:
 
-ETH, BNB, MATIC network (ERC20, BEP20):
+**ETH, BNB, MATIC network (ERC20, BEP20):**
 
 ```text
 0x9391475e4606322dc4a35daeef2da16910862afb
 
 ```
 
-TRON network (TRC20):
+**TRON network (TRC20):**
 
 ```text
 TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3
 
 ```
 
-Bitcoin network:
+**Bitcoin network:**
 
 ```text
 bc1q4jdhy3j2egfrm36pgv8f8senlesm5edvhuxuy9
 
 ```
 
-Dogecoin network:
+**Dogecoin network:**
 
 ```text
 DDDn4kCN9P3ThrHALrV8WnrYxfoMv6nrUK
 
 ```
 
-TON network:
+**TON network:**
 
 ```text
 UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
@@ -258,3 +258,7 @@ UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 ```
 
 Thank you for your support! 🙏
+
+```
+
+```
