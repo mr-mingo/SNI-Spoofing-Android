@@ -1165,11 +1165,13 @@ fun AboutScreen(isDark: Boolean) {
                 modifier = Modifier.padding(24.dp).fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    androidx.compose.ui.res.painterResource(id = R.drawable.ic_github), 
-                    contentDescription = null, 
-                    tint = if (isDark) Color.White else Color.Black, 
-                    modifier = Modifier.size(48.dp)
+                coil.compose.AsyncImage(
+                    model = "https://github.com/mr-mingo.png",
+                    contentDescription = null,
+                    modifier = Modifier.size(56.dp).clip(androidx.compose.foundation.shape.CircleShape),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                    fallback = androidx.compose.ui.res.painterResource(id = R.drawable.ic_github),
+                    error = androidx.compose.ui.res.painterResource(id = R.drawable.ic_github)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(strings.authorGithubTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
@@ -1198,11 +1200,13 @@ fun AboutScreen(isDark: Boolean) {
                 modifier = Modifier.padding(24.dp).fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    androidx.compose.ui.res.painterResource(id = R.drawable.ic_github), 
-                    contentDescription = null, 
-                    tint = if (isDark) Color.White else Color.Black, 
-                    modifier = Modifier.size(48.dp)
+                coil.compose.AsyncImage(
+                    model = "https://github.com/patterniha.png",
+                    contentDescription = null,
+                    modifier = Modifier.size(56.dp).clip(androidx.compose.foundation.shape.CircleShape),
+                    contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                    fallback = androidx.compose.ui.res.painterResource(id = R.drawable.ic_github),
+                    error = androidx.compose.ui.res.painterResource(id = R.drawable.ic_github)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(strings.poweredByTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
@@ -1242,22 +1246,23 @@ fun AboutScreen(isDark: Boolean) {
 
 @Composable
 fun InteractiveSimulator(isDark: Boolean, textColor: Color, subColor: Color) {
+    val strings = com.example.ui.LocalStrings.current
     var step by remember { mutableIntStateOf(0) }
     val maxSteps = 4
     
     val titles = listOf(
-        "1. Standard Request",
-        "2. DPI Drop (Blocked)",
-        "3. TCP Fragmentation",
-        "4. DPI Bypassed (Split)",
-        "5. Pass-Through Tunnel"
+        strings.simulatorStep1Title,
+        strings.simulatorStep2Title,
+        strings.simulatorStep3Title,
+        strings.simulatorStep4Title,
+        strings.simulatorStep5Title
     )
     val descs = listOf(
-        "Client sends a standard TLS ClientHello packet with plain SNI (e.g. twitter.com) visible in routing.",
-        "Deep Packet Inspection (DPI) reads the plain SNI and drops the connection. Traffic cannot proceed.",
-        "Proxy intercepts packet, splits SNI into segments (e.g. 'twit' + 'ter.com') across multiple TCP packets.",
-        "DPI sees incomplete data and passes them. Target server reassembles the packets perfectly.",
-        "In Pass-Through mode, local Proxy directly tunnels bytes unmodified. Bypasses local app filters without fragmentation."
+        strings.simulatorStep1Desc,
+        strings.simulatorStep2Desc,
+        strings.simulatorStep3Desc,
+        strings.simulatorStep4Desc,
+        strings.simulatorStep5Desc
     )
 
     val progress by animateFloatAsState(
@@ -1384,7 +1389,7 @@ fun InteractiveSimulator(isDark: Boolean, textColor: Color, subColor: Color) {
             Button(
                 onClick = { step = if(step > 0) step - 1 else maxSteps },
                 colors = ButtonDefaults.buttonColors(containerColor = if(isDark) Color(0xFF1E293B) else Color(0xFFE2E8F0), contentColor = if(isDark) Color.White else Color.Black)
-            ) { Text("PREV") }
+            ) { Text(strings.simulatorPrev) }
             
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                 (0..maxSteps).forEach { i ->
@@ -1395,7 +1400,7 @@ fun InteractiveSimulator(isDark: Boolean, textColor: Color, subColor: Color) {
             Button(
                 onClick = { step = if(step < maxSteps) step + 1 else 0 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00BFA5))
-            ) { Text(if(step == maxSteps) "RESTART" else "NEXT") }
+            ) { Text(if(step == maxSteps) strings.simulatorRestart else strings.simulatorNext) }
         }
     }
 }

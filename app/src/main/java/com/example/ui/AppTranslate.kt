@@ -56,7 +56,20 @@ data class AppStrings(
     val designBy: String,
     val poweredByDashboard: String,
     val errorPortRange: String,
-    val errorEmptySni: String
+    val errorEmptySni: String,
+    val simulatorStep1Title: String,
+    val simulatorStep2Title: String,
+    val simulatorStep3Title: String,
+    val simulatorStep4Title: String,
+    val simulatorStep5Title: String,
+    val simulatorStep1Desc: String,
+    val simulatorStep2Desc: String,
+    val simulatorStep3Desc: String,
+    val simulatorStep4Desc: String,
+    val simulatorStep5Desc: String,
+    val simulatorPrev: String,
+    val simulatorNext: String,
+    val simulatorRestart: String
 )
 
 val EnglishStrings = AppStrings(
@@ -105,15 +118,28 @@ val EnglishStrings = AppStrings(
     saveChanges = "SAVE",
     systemDefault = "System Default",
     authorGithubTitle = "Author",
-    authorGithubSubTitle = "SNI-Spoofing-Android by Mr-MinGo",
+    authorGithubSubTitle = "SNI-Spoofing-Android by Mr-Mingo",
     poweredByTitle = "Powered By",
     poweredBySubTitle = "Core logic based on SNI-Spoofing by patterniha",
     notificationTitle = "SNI Spoofing is Active",
     notificationText = "Proxy is running in the background on 127.0.0.1",
-    designBy = "Designed by Mr-MinGo",
+    designBy = "Designed by Mr-Mingo",
     poweredByDashboard = "Powered by patterniha",
     errorPortRange = "Port must be between 1 and 65535",
-    errorEmptySni = "Custom SNI cannot be empty"
+    errorEmptySni = "Custom SNI cannot be empty",
+    simulatorStep1Title = "1. Standard Request",
+    simulatorStep2Title = "2. DPI Drop (Blocked)",
+    simulatorStep3Title = "3. TCP Fragmentation",
+    simulatorStep4Title = "4. DPI Bypassed (Split)",
+    simulatorStep5Title = "5. Pass-Through Tunnel",
+    simulatorStep1Desc = "Client sends a standard TLS ClientHello packet with plain SNI (e.g. twitter.com) visible in routing.",
+    simulatorStep2Desc = "Deep Packet Inspection (DPI) reads the plain SNI and drops the connection. Traffic cannot proceed.",
+    simulatorStep3Desc = "Proxy intercepts packet, splits SNI into segments (e.g. 'twit' + 'ter.com') across multiple TCP packets.",
+    simulatorStep4Desc = "DPI sees incomplete data and passes them. Target server reassembles the packets perfectly.",
+    simulatorStep5Desc = "In Pass-Through mode, local Proxy directly tunnels bytes unmodified. Bypasses local app filters without fragmentation.",
+    simulatorPrev = "PREV",
+    simulatorNext = "NEXT",
+    simulatorRestart = "RESTART"
 )
 
 val PersianStrings = AppStrings(
@@ -162,15 +188,28 @@ val PersianStrings = AppStrings(
     saveChanges = "ذخیره کردن",
     systemDefault = "پیش‌فرض سیستم",
     authorGithubTitle = "توسعه‌دهنده",
-    authorGithubSubTitle = "پروژه اندروید توسط Mr-MinGo",
+    authorGithubSubTitle = "پروژه اندروید توسط Mr-Mingo",
     poweredByTitle = "قدرت گرفته از",
     poweredBySubTitle = "منطق اصلی بر اساس کد patterniha",
     notificationTitle = "دور زدن کلاینت فعال است",
     notificationText = "پروکسی در پس‌زمینه روی 127.0.0.1 در حال اجراست",
-    designBy = "طراحی توسط Mr-MinGo",
+    designBy = "طراحی توسط Mr-Mingo",
     poweredByDashboard = "قدرت گرفته از patterniha",
     errorPortRange = "پورت باید بین ۱ تا ۶۵۵۳۵ باشد",
-    errorEmptySni = "SNI نمی‌تواند خالی باشد"
+    errorEmptySni = "SNI نمی‌تواند خالی باشد",
+    simulatorStep1Title = "۱. درخواست عادی",
+    simulatorStep2Title = "۲. بلاک شدن توسط DPI",
+    simulatorStep3Title = "۳. خرد کردن TCP",
+    simulatorStep4Title = "۴. دور زدن DPI",
+    simulatorStep5Title = "۵. تونل عبوری (بدون تغییر)",
+    simulatorStep1Desc = "کلاینت یک بسته استاندارد ClientHello با SNI مشخص (مثل twitter.com) می‌فرستد که در شبکه قابل رویت است.",
+    simulatorStep2Desc = "سیستم DPI متوجه SNI می‌شود و اتصال را قطع می‌کند. ترافیک مسدود می‌شود.",
+    simulatorStep3Desc = "پروکسی بسته را دریافت کرده و SNI را به تکه‌های مختلف در چند بسته TCP تقسیم می‌کند.",
+    simulatorStep4Desc = "فایروال (DPI) دیتای ناقص می‌بیند و آن را عبور می‌دهد. سرور مقصد به‌خوبی بسته‌ها را سرهم می‌کند.",
+    simulatorStep5Desc = "در حالت Pass-Through، پروکسی محلی بدون هیچ تغییری بایت‌ها را رد می‌کند تا فیلترهای داخلی دور زده شوند.",
+    simulatorPrev = "قبلی",
+    simulatorNext = "بعدی",
+    simulatorRestart = "شروع مجدد"
 )
 
 val LocalStrings = staticCompositionLocalOf { EnglishStrings }
