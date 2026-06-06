@@ -12,13 +12,15 @@ class SniProxyServer(
     private val config: ProxyConfig,
     private val onLog: (String) -> Unit,
     private val onStatsUpdate: (tx: Long, rx: Long) -> Unit,
-    private val onConnectionCount: (Int) -> Unit
+    private val onConnectionCount: (active: Int, total: Int) -> Unit
 ) {
     private var serverSocket: ServerSocket? = null
     var isRunning = false
         private set
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val proxyDispatcher = java.util.concurrent.Executors.newCachedThreadPool().asCoroutineDispatcher()
+    private val scope = CoroutineScope(proxyDispatcher + SupervisorJob())
     private val activeConnections = AtomicInteger(0)
+    private val totalConnections = AtomicInteger(0)
     
     private val totalTx = AtomicLong(0)
     private val totalRx = AtomicLong(0)
@@ -40,7 +42,8 @@ class SniProxyServer(
                 while (isRunning) {
                     val clientSocket = serverSocket?.accept() ?: break
                     val currentActive = activeConnections.incrementAndGet()
-                    onConnectionCount(currentActive)
+                    val currentTotal = totalConnections.incrementAndGet()
+                    onConnectionCount(currentActive, currentTotal)
                     
                     launch {
                         handleClient(clientSocket)
@@ -68,7 +71,7 @@ class SniProxyServer(
         serverSocket = null
         scope.cancel()
         activeConnections.set(0)
-        onConnectionCount(0)
+        onConnectionCount(0, totalConnections.get())
         onLog("[SYSTEM] Proxy stopped. Idle state entered.")
     }
 
@@ -113,8 +116,15 @@ class SniProxyServer(
         } finally {
             try { clientSocket.close() } catch (e: Exception) {}
             try { targetSocket?.close() } catch (e: Exception) {}
-            val currentActive = activeConnections.decrementAndGet()
-            onConnectionCount(currentActive)
+            
+            var currentActive = activeConnections.decrementAndGet()
+            if (currentActive < 0) {
+                activeConnections.set(0)
+                currentActive = 0
+            }
+            if (isRunning) {
+                onConnectionCount(currentActive, totalConnections.get())
+            }
             onLog("[CONN] Terminated session: $clientIp")
         }
     }
@@ -125,12 +135,11 @@ class SniProxyServer(
         var isFirstPacket = true
         
         while (true) {
-            bytesRead = withContext(Dispatchers.IO) {
-                try {
-                    input.read(buffer)
-                } catch (e: Exception) {
-                    -1
-                }
+            if (!scope.isActive) break
+            bytesRead = try {
+                input.read(buffer)
+            } catch (e: Exception) {
+                -1
             }
             if (bytesRead == -1) break
             
@@ -146,7 +155,7 @@ class SniProxyServer(
                         val splitPart1 = buffer.copyOfRange(0, splitIndex)
                         val splitPart2 = buffer.copyOfRange(splitIndex, bytesRead)
                         
-                        withContext(Dispatchers.IO) {
+                        try {
                             output.write(splitPart1)
                             output.flush()
                             
@@ -156,7 +165,7 @@ class SniProxyServer(
                             
                             output.write(splitPart2)
                             output.flush()
-                        }
+                        } catch (e: Exception) {}
                         
                         val tx = totalTx.addAndGet(bytesRead.toLong())
                         onStatsUpdate(tx, totalRx.get())
@@ -170,13 +179,13 @@ class SniProxyServer(
                     val splitIndex = if (bytesRead > 5) 5 else 1
                     val splitPart1 = buffer.copyOfRange(0, splitIndex)
                     val splitPart2 = buffer.copyOfRange(splitIndex, bytesRead)
-                    withContext(Dispatchers.IO) {
+                    try {
                         output.write(splitPart1)
                         output.flush()
                         delay(20)
                         output.write(splitPart2)
                         output.flush()
-                    }
+                    } catch (e: Exception) {}
                     val tx = totalTx.addAndGet(bytesRead.toLong())
                     onStatsUpdate(tx, totalRx.get())
                     continue
@@ -184,10 +193,10 @@ class SniProxyServer(
             }
             
             if (bytesRead > 0) {
-                withContext(Dispatchers.IO) {
+                try {
                     output.write(buffer, 0, bytesRead)
                     output.flush()
-                }
+                } catch (e: Exception) {}
                 val tx = totalTx.addAndGet(bytesRead.toLong())
                 onStatsUpdate(tx, totalRx.get())
             }
@@ -198,19 +207,18 @@ class SniProxyServer(
         val buffer = ByteArray(16384)
         var bytesRead: Int
         while (true) {
-            bytesRead = withContext(Dispatchers.IO) {
-                try {
-                    input.read(buffer)
-                } catch (e: Exception) {
-                    -1
-                }
+            if (!scope.isActive) break
+            bytesRead = try {
+                input.read(buffer)
+            } catch (e: Exception) {
+                -1
             }
             if (bytesRead == -1) break
             if (bytesRead > 0) {
-                withContext(Dispatchers.IO) {
+                try {
                     output.write(buffer, 0, bytesRead)
                     output.flush()
-                }
+                } catch (e: Exception) {}
                 val rx = totalRx.addAndGet(bytesRead.toLong())
                 onStatsUpdate(totalTx.get(), rx)
             }

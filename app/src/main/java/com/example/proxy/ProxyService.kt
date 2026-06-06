@@ -73,6 +73,12 @@ class ProxyService : Service() {
     private fun startProxy(config: ProxyConfig) {
         if (proxyServer?.isRunning == true) return
 
+        // Reset stats when starting fresh
+        ProxyManager.txBytes.value = 0L
+        ProxyManager.rxBytes.value = 0L
+        ProxyManager.activeConnections.value = 0
+        ProxyManager.totalConnections.value = 0
+
         proxyServer = SniProxyServer(
             config = config,
             onLog = { ProxyManager.addLog(it) },
@@ -80,8 +86,9 @@ class ProxyService : Service() {
                 ProxyManager.txBytes.value = tx
                 ProxyManager.rxBytes.value = rx
             },
-            onConnectionCount = { count ->
-                ProxyManager.activeConnections.value = count
+            onConnectionCount = { active, total ->
+                ProxyManager.activeConnections.value = active
+                ProxyManager.totalConnections.value = total
             }
         )
         proxyServer?.start()
@@ -91,6 +98,7 @@ class ProxyService : Service() {
     private fun stopProxy() {
         proxyServer?.stop()
         proxyServer = null
+        ProxyManager.activeConnections.value = 0
         ProxyManager.isRunning.value = false
     }
 

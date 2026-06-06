@@ -149,6 +149,7 @@ fun AppRootScreen(
     val txBytes by ProxyManager.txBytes.collectAsStateWithLifecycle()
     val rxBytes by ProxyManager.rxBytes.collectAsStateWithLifecycle()
     val activeConnections by ProxyManager.activeConnections.collectAsStateWithLifecycle()
+    val totalConnections by ProxyManager.totalConnections.collectAsStateWithLifecycle()
     val logs = ProxyManager.logs
 
     // State parameters held
@@ -405,7 +406,14 @@ fun AppRootScreen(
                     label = "TabTransition"
                 ) { targetTab ->
                     when (targetTab) {
-                        0 -> DashboardScreen(activeConnections, txBytes, rxBytes, activeConfig, isDark)
+                        0 -> DashboardScreen(
+                            activeConnections = activeConnections,
+                            totalConnections = totalConnections,
+                            txBytes = txBytes,
+                            rxBytes = rxBytes,
+                            activeConfig = activeConfig,
+                            isDark = isDark
+                        )
                         1 -> LogsScreen(logs, isDark)
                         2 -> SettingsScreen(
                             listenPort = listenPort,
@@ -446,6 +454,7 @@ fun AppRootScreen(
 @Composable
 fun DashboardScreen(
     activeConnections: Int,
+    totalConnections: Int,
     txBytes: Long,
     rxBytes: Long,
     activeConfig: ProxyConfig,
@@ -463,6 +472,7 @@ fun DashboardScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
         // Network Performance Section
@@ -540,6 +550,21 @@ fun DashboardScreen(
                     )
                 }
                 
+                HorizontalDivider(
+                    modifier = Modifier.height(40.dp).width(1.dp),
+                    color = cardBorder
+                )
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(strings.totalFlows, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
+                    Text(
+                        "$totalConnections", 
+                        color = textColor,
+                        fontSize = 18.sp, 
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
                 HorizontalDivider(
                     modifier = Modifier.height(40.dp).width(1.dp),
                     color = cardBorder

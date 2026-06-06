@@ -14,6 +14,7 @@ object ProxyManager {
     val txBytes = MutableStateFlow(0L)
     val rxBytes = MutableStateFlow(0L)
     val activeConnections = MutableStateFlow(0)
+    val totalConnections = MutableStateFlow(0)
     val logs = mutableStateListOf<String>()
 
     private val scope = CoroutineScope(Dispatchers.Main)
