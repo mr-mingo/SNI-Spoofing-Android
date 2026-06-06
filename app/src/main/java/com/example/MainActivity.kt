@@ -536,49 +536,44 @@ fun DashboardScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 20.dp),
+                    .height(IntrinsicSize.Min)
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
-                    Text(strings.activeFlows, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+                    Text(strings.activeFlows, fontSize = 10.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
                     Text(
                         "$activeConnections", 
                         color = if (activeConnections > 0) Color(0xFF00BFA5) else textColor,
-                        fontSize = 18.sp, 
+                        fontSize = 16.sp, 
                         fontWeight = FontWeight.Bold
                     )
                 }
                 
-                HorizontalDivider(
-                    modifier = Modifier.height(40.dp).width(1.dp),
-                    color = cardBorder
-                )
+                Box(modifier = Modifier.fillMaxHeight().padding(vertical = 4.dp).width(1.dp).background(cardBorder))
 
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(strings.totalFlows, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
-                    Text(
-                        "$totalConnections", 
-                        color = textColor,
-                        fontSize = 18.sp, 
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                HorizontalDivider(
-                    modifier = Modifier.height(40.dp).width(1.dp),
-                    color = cardBorder
-                )
-
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(strings.targetAddress, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1.5f)) {
+                    Text(strings.targetAddress, fontSize = 10.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
                     Text(
                         "${activeConfig.connectHost}:${activeConfig.connectPort}",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         color = textColor,
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Box(modifier = Modifier.fillMaxHeight().padding(vertical = 4.dp).width(1.dp).background(cardBorder))
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+                    Text(strings.totalFlows, fontSize = 10.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold, color = subTextColor, letterSpacing = 1.sp)
+                    Text(
+                        "$totalConnections", 
+                        color = textColor,
+                        fontSize = 16.sp, 
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -627,6 +622,7 @@ fun DashboardScreen(
                 Box(
                     modifier = Modifier
                         .weight(1f)
+                        .height(48.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .background(if (isDark) Color(0xFF2E1065) else Color(0xFFEDE9FE))
                         .border(1.dp, if (isDark) Color(0xFF4C1D95) else Color(0xFFDDD6FE), RoundedCornerShape(8.dp))
@@ -634,11 +630,11 @@ fun DashboardScreen(
                             clipboardManager.setText(AnnotatedString("127.0.0.1"))
                             Toast.makeText(context, "Host copied!", Toast.LENGTH_SHORT).show()
                         }
-                        .padding(vertical = 12.dp, horizontal = 8.dp),
+                        .padding(horizontal = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Host", fontSize = 11.sp, color = if(isDark) Color(0xFFA78BFA) else Color(0xFF7C3AED), fontWeight = FontWeight.Bold)
+                    Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                        Text("Host: ", fontSize = 12.sp, color = if(isDark) Color(0xFFA78BFA) else Color(0xFF7C3AED), fontWeight = FontWeight.Bold)
                         Text("127.0.0.1", fontSize = 14.sp, color = if(isDark) Color.White else Color(0xFF4C1D95), fontWeight = FontWeight.Black)
                     }
                 }
@@ -646,6 +642,7 @@ fun DashboardScreen(
                 Box(
                     modifier = Modifier
                         .weight(1f)
+                        .height(48.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .background(if (isDark) Color(0xFF064E3B) else Color(0xFFD1FAE5))
                         .border(1.dp, if (isDark) Color(0xFF047857) else Color(0xFFA7F3D0), RoundedCornerShape(8.dp))
@@ -653,11 +650,11 @@ fun DashboardScreen(
                             clipboardManager.setText(AnnotatedString(activeConfig.listenPort.toString()))
                             Toast.makeText(context, "Port copied!", Toast.LENGTH_SHORT).show()
                         }
-                        .padding(vertical = 12.dp, horizontal = 8.dp),
+                        .padding(horizontal = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Port", fontSize = 11.sp, color = if(isDark) Color(0xFF34D399) else Color(0xFF059669), fontWeight = FontWeight.Bold)
+                    Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                        Text("Port: ", fontSize = 12.sp, color = if(isDark) Color(0xFF34D399) else Color(0xFF059669), fontWeight = FontWeight.Bold)
                         Text("${activeConfig.listenPort}", fontSize = 14.sp, color = if(isDark) Color.White else Color(0xFF064E3B), fontWeight = FontWeight.Black)
                     }
                 }
@@ -689,23 +686,44 @@ fun DashboardScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val uriAuthor = Uri.parse("https://github.com/mr-mingo/SNI-Spoofing-Android")
-            val uriPatterniha = Uri.parse("https://github.com/patterniha/SNI-Spoofing")
+            
             Text(
                 text = strings.designBy,
                 fontSize = 11.sp,
                 color = subTextColor,
-                modifier = Modifier.padding(bottom = 4.dp).clickable { 
+                modifier = Modifier.padding(bottom = 6.dp).clickable { 
                     try { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
                 }
             )
-            Text(
-                text = strings.poweredByDashboard,
-                fontSize = 11.sp,
-                color = subTextColor,
-                modifier = Modifier.clickable { 
-                    try { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
-                }
-            )
+            
+            val ethWallet = "0x9391475e4606322dc4a35daeef2da16910862afb"
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        clipboardManager.setText(AnnotatedString(ethWallet))
+                        Toast.makeText(context, "Address copied!", Toast.LENGTH_SHORT).show()
+                    }
+                    .padding(vertical = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "☕ Donate (ERC20/BEP20)",
+                    fontSize = 10.sp,
+                    color = subTextColor,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = ethWallet,
+                    fontSize = 10.sp,
+                    color = subTextColor,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    fontFamily = FontFamily.Monospace,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
         }
     }
 }
@@ -1151,8 +1169,6 @@ fun AboutScreen(isDark: Boolean) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        
         // Author Card
         Card(
             modifier = Modifier.fillMaxWidth().clickable {
@@ -1177,6 +1193,26 @@ fun AboutScreen(isDark: Boolean) {
                 Text(strings.authorGithubTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
                 Text(strings.authorGithubSubTitle, fontSize = 14.sp, color = subColor, textAlign = TextAlign.Center)
                 Spacer(modifier = Modifier.height(16.dp))
+                
+                val ethWallet = "0x9391475e4606322dc4a35daeef2da16910862afb"
+                val tronWallet = "TSKr7K827wsDchiXiDhKS5J1bU1fN4AVF3"
+                val clipboardManager = LocalClipboardManager.current
+                
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    DonationBadge(label = " Donate ETH/BNB/MATIC", address = ethWallet, isDark = isDark) {
+                        clipboardManager.setText(AnnotatedString(it))
+                        Toast.makeText(context, "Address copied!", Toast.LENGTH_SHORT).show()
+                    }
+                    DonationBadge(label = " Donate TRON (TRC20)", address = tronWallet, isDark = isDark) {
+                        clipboardManager.setText(AnnotatedString(it))
+                        Toast.makeText(context, "Address copied!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                
                 Button(
                     onClick = { 
                         try { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
@@ -1212,6 +1248,26 @@ fun AboutScreen(isDark: Boolean) {
                 Text(strings.poweredByTitle, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
                 Text(strings.poweredBySubTitle, fontSize = 14.sp, color = subColor, textAlign = TextAlign.Center)
                 Spacer(modifier = Modifier.height(16.dp))
+                
+                val usdtBep20 = "0x76a768B53Ca77B43086946315f0BDF21156bF424"
+                val usdtTrc20 = "TU5gKvKqcXPn8itp1DouBCwcqGHMemBm8o"
+                val clipboardManager = LocalClipboardManager.current
+                
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    DonationBadge(label = " Donate USDT (BEP20)", address = usdtBep20, isDark = isDark) {
+                        clipboardManager.setText(AnnotatedString(it))
+                        Toast.makeText(context, "Address copied!", Toast.LENGTH_SHORT).show()
+                    }
+                    DonationBadge(label = " Donate USDT (TRC20)", address = usdtTrc20, isDark = isDark) {
+                        clipboardManager.setText(AnnotatedString(it))
+                        Toast.makeText(context, "Address copied!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                
                 Button(
                     onClick = { 
                         try { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
@@ -1225,21 +1281,6 @@ fun AboutScreen(isDark: Boolean) {
         
         Spacer(modifier = Modifier.height(24.dp))
         
-        Text(
-            strings.simulatorInfo,
-            fontWeight = FontWeight.Black,
-            color = textColor,
-            fontSize = 18.sp,
-            letterSpacing = 1.sp
-        )
-        Text(
-            strings.connectionTipBody,
-            color = subColor,
-            fontSize = 13.sp,
-            lineHeight = 20.sp,
-            textAlign = TextAlign.Center
-        )
-
         InteractiveSimulator(isDark = isDark, textColor = textColor, subColor = subColor)
     }
 }
@@ -1415,5 +1456,34 @@ fun BoxScope.LabelNode(name: String, alignment: Alignment, modifier: Modifier = 
             .padding(horizontal = 6.dp, vertical = 4.dp)
     ) {
         Text(name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.Black, fontFamily = FontFamily.Monospace)
+    }
+}
+
+@Composable
+fun DonationBadge(label: String, address: String, isDark: Boolean, onCopy: (String) -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .background(if (isDark) Color(0xFF1E293B).copy(alpha = 0.5f) else Color(0xFFF1F5F9).copy(alpha = 0.5f))
+            .clickable { onCopy(address) }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+            Text(label.trim(), fontSize = 10.sp, color = if(isDark) Color(0xFF94A3B8) else Color(0xFF64748B), fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(address, fontSize = 11.sp, color = if(isDark) Color.White else Color.Black, maxLines = 1, overflow = TextOverflow.Ellipsis, fontFamily = FontFamily.Monospace)
+        }
+        Text(
+            "COPY",
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Black,
+            color = if(isDark) Color(0xFF38BDF8) else Color(0xFF0284C7),
+            modifier = Modifier
+                .background(if(isDark) Color(0xFF0F172A) else Color(0xFFE0F2FE), androidx.compose.foundation.shape.CircleShape)
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+        )
     }
 }
