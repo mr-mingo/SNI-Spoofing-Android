@@ -51,7 +51,11 @@ data class AppStrings(
     val poweredByTitle: String,
     val poweredBySubTitle: String,
     val notificationTitle: String,
-    val notificationText: String
+    val notificationText: String,
+    val designBy: String,
+    val poweredByDashboard: String,
+    val errorPortRange: String,
+    val errorEmptySni: String
 )
 
 val EnglishStrings = AppStrings(
@@ -103,7 +107,11 @@ val EnglishStrings = AppStrings(
     poweredByTitle = "Powered By",
     poweredBySubTitle = "Core logic based on SNI-Spoofing by patterniha",
     notificationTitle = "SNI Spoofing is Active",
-    notificationText = "Proxy is running in the background on 127.0.0.1"
+    notificationText = "Proxy is running in the background on 127.0.0.1",
+    designBy = "Designed by Mr-MinGo",
+    poweredByDashboard = "Powered by patterniha",
+    errorPortRange = "Port must be between 1 and 65535",
+    errorEmptySni = "Custom SNI cannot be empty"
 )
 
 val PersianStrings = AppStrings(
@@ -155,7 +163,11 @@ val PersianStrings = AppStrings(
     poweredByTitle = "قدرت گرفته از",
     poweredBySubTitle = "منطق اصلی بر اساس کد patterniha",
     notificationTitle = "دور زدن کلاینت فعال است",
-    notificationText = "پروکسی در پس‌زمینه روی 127.0.0.1 در حال اجراست"
+    notificationText = "پروکسی در پس‌زمینه روی 127.0.0.1 در حال اجراست",
+    designBy = "طراحی توسط Mr-MinGo",
+    poweredByDashboard = "قدرت گرفته از patterniha",
+    errorPortRange = "پورت باید بین ۱ تا ۶۵۵۳۵ باشد",
+    errorEmptySni = "SNI نمی‌تواند خالی باشد"
 )
 
 val LocalStrings = staticCompositionLocalOf { EnglishStrings }

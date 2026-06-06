@@ -37,6 +37,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -326,25 +328,41 @@ fun AppRootScreen(
                                     action = ProxyService.ACTION_STOP
                                 }
                                 context.startService(intent)
-                            } else if (hasUnsavedChanges) {
-                                savePrefs()
                             } else {
-                                savePrefs()
-                                val intent = Intent(context, ProxyService::class.java).apply {
-                                    action = ProxyService.ACTION_START
-                                    putExtra(ProxyService.KEY_LISTEN_PORT, activeConfig.listenPort)
-                                    putExtra(ProxyService.KEY_CONNECT_HOST, activeConfig.connectHost)
-                                    putExtra(ProxyService.KEY_CONNECT_PORT, activeConfig.connectPort)
-                                    putExtra(ProxyService.KEY_FAKE_SNI, activeConfig.fakeSni)
-                                    putExtra(ProxyService.KEY_STRATEGY, activeConfig.bypassMethod)
-                                    putExtra(ProxyService.KEY_NOTIF_TITLE, strings.notificationTitle)
-                                    putExtra(ProxyService.KEY_NOTIF_TEXT, strings.notificationText)
-                                    putExtra(ProxyService.KEY_NOTIF_STOP, strings.stop)
+                                val lPort = listenPort.toIntOrNull() ?: 0
+                                val cPort = connectPort.toIntOrNull() ?: 0
+                                val isPortValid = lPort in 1..65535 && cPort in 1..65535
+                                val isSniValid = fakeSni != "Custom ..." || customSni.isNotBlank()
+                                
+                                if (!isPortValid) {
+                                    Toast.makeText(context, strings.errorPortRange, Toast.LENGTH_SHORT).show()
+                                    return@Button
                                 }
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                    context.startForegroundService(intent)
+                                if (!isSniValid) {
+                                    Toast.makeText(context, strings.errorEmptySni, Toast.LENGTH_SHORT).show()
+                                    return@Button
+                                }
+
+                                if (hasUnsavedChanges) {
+                                    savePrefs()
                                 } else {
-                                    context.startService(intent)
+                                    savePrefs()
+                                    val intent = Intent(context, ProxyService::class.java).apply {
+                                        action = ProxyService.ACTION_START
+                                        putExtra(ProxyService.KEY_LISTEN_PORT, activeConfig.listenPort)
+                                        putExtra(ProxyService.KEY_CONNECT_HOST, activeConfig.connectHost)
+                                        putExtra(ProxyService.KEY_CONNECT_PORT, activeConfig.connectPort)
+                                        putExtra(ProxyService.KEY_FAKE_SNI, activeConfig.fakeSni)
+                                        putExtra(ProxyService.KEY_STRATEGY, activeConfig.bypassMethod)
+                                        putExtra(ProxyService.KEY_NOTIF_TITLE, strings.notificationTitle)
+                                        putExtra(ProxyService.KEY_NOTIF_TEXT, strings.notificationText)
+                                        putExtra(ProxyService.KEY_NOTIF_STOP, strings.stop)
+                                    }
+                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                        context.startForegroundService(intent)
+                                    } else {
+                                        context.startService(intent)
+                                    }
                                 }
                             }
                         },
@@ -391,11 +409,19 @@ fun AppRootScreen(
                         1 -> LogsScreen(logs, isDark)
                         2 -> SettingsScreen(
                             listenPort = listenPort,
-                            onListenPortChange = { listenPort = it },
+                            onListenPortChange = { newValue ->
+                                if (newValue.isEmpty() || (newValue.all { it.isDigit() } && newValue.length <= 5)) {
+                                    listenPort = newValue
+                                }
+                            },
                             connectHost = connectHost,
                             onConnectHostChange = { connectHost = it },
                             connectPort = connectPort,
-                            onConnectPortChange = { connectPort = it },
+                            onConnectPortChange = { newValue ->
+                                if (newValue.isEmpty() || (newValue.all { it.isDigit() } && newValue.length <= 5)) {
+                                    connectPort = newValue
+                                }
+                            },
                             fakeSni = fakeSni,
                             onFakeSniChange = { fakeSni = it },
                             customSni = customSni,
@@ -629,6 +655,32 @@ fun DashboardScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(strings.copyProxyBtn, fontWeight = FontWeight.Bold)
             }
+        }
+        
+        Spacer(modifier = Modifier.weight(1f))
+        
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val uriAuthor = Uri.parse("https://github.com/mr-mingo/SNI-Spoofing-Android")
+            val uriPatterniha = Uri.parse("https://github.com/patterniha/SNI-Spoofing")
+            Text(
+                text = strings.designBy,
+                fontSize = 11.sp,
+                color = subTextColor,
+                modifier = Modifier.padding(bottom = 4.dp).clickable { 
+                    try { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
+                }
+            )
+            Text(
+                text = strings.poweredByDashboard,
+                fontSize = 11.sp,
+                color = subTextColor,
+                modifier = Modifier.clickable { 
+                    try { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
+                }
+            )
         }
     }
 }
@@ -1079,7 +1131,7 @@ fun AboutScreen(isDark: Boolean) {
         // Author Card
         Card(
             modifier = Modifier.fillMaxWidth().clickable {
-                context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor))
+                try { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
             },
             colors = CardDefaults.cardColors(containerColor = if (isDark) Color(0xFF0D121B) else Color.White),
             border = BorderStroke(1.dp, if (isDark) Color(0xFF222B3D) else Color(0xFFCBD5E1))
@@ -1099,7 +1151,9 @@ fun AboutScreen(isDark: Boolean) {
                 Text(strings.authorGithubSubTitle, fontSize = 14.sp, color = subColor, textAlign = TextAlign.Center)
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) },
+                    onClick = { 
+                        try { context.startActivity(Intent(Intent.ACTION_VIEW, uriAuthor)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00BFA5))
                 ) {
                     Text(strings.openGithubBtn, color = Color.White, fontWeight = FontWeight.Bold)
@@ -1110,7 +1164,7 @@ fun AboutScreen(isDark: Boolean) {
         // Patterniha Card
         Card(
             modifier = Modifier.fillMaxWidth().clickable {
-                context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha))
+                try { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
             },
             colors = CardDefaults.cardColors(containerColor = if (isDark) Color(0xFF0D121B) else Color.White),
             border = BorderStroke(1.dp, if (isDark) Color(0xFF222B3D) else Color(0xFFCBD5E1))
@@ -1130,7 +1184,9 @@ fun AboutScreen(isDark: Boolean) {
                 Text(strings.poweredBySubTitle, fontSize = 14.sp, color = subColor, textAlign = TextAlign.Center)
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) },
+                    onClick = { 
+                        try { context.startActivity(Intent(Intent.ACTION_VIEW, uriPatterniha)) } catch (e: Exception) { Toast.makeText(context, "Cannot open link", Toast.LENGTH_SHORT).show() }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D9488))
                 ) {
                     Text(strings.openGithubBtn, color = Color.White, fontWeight = FontWeight.Bold)
@@ -1155,81 +1211,166 @@ fun AboutScreen(isDark: Boolean) {
             textAlign = TextAlign.Center
         )
 
-        // Animated State diagram with Vectors
+        InteractiveSimulator(isDark = isDark, textColor = textColor, subColor = subColor)
+    }
+}
+
+@Composable
+fun InteractiveSimulator(isDark: Boolean, textColor: Color, subColor: Color) {
+    var step by remember { mutableIntStateOf(0) }
+    val maxSteps = 4
+    
+    val titles = listOf(
+        "1. Standard Request",
+        "2. DPI Drop (Blocked)",
+        "3. TCP Fragmentation",
+        "4. DPI Bypassed (Split)",
+        "5. Pass-Through Tunnel"
+    )
+    val descs = listOf(
+        "Client sends a standard TLS ClientHello packet with plain SNI (e.g. twitter.com) visible in routing.",
+        "Deep Packet Inspection (DPI) reads the plain SNI and drops the connection. Traffic cannot proceed.",
+        "Proxy intercepts packet, splits SNI into segments (e.g. 'twit' + 'ter.com') across multiple TCP packets.",
+        "DPI sees incomplete data and passes them. Target server reassembles the packets perfectly.",
+        "In Pass-Through mode, local Proxy directly tunnels bytes unmodified. Bypasses local app filters without fragmentation."
+    )
+
+    val progress by animateFloatAsState(
+        targetValue = when(step) {
+            0, 2, 4 -> 0.1f // Start
+            1 -> 0.5f // Hit firewall
+            3, 5 -> 1f // Pass to server
+            else -> 0f
+        },
+        animationSpec = tween(durationMillis = 800, easing = LinearOutSlowInEasing),
+        label = "packetProgress"
+    )
+
+    Column(modifier = Modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(240.dp)
-                .background(if (isDark) Color(0xFF04060A) else Color(0xFFF1F5F9), RoundedCornerShape(12.dp))
-                .border(2.dp, if (isDark) Color(0xFF1B2336) else Color(0xFFE2E8F0), RoundedCornerShape(12.dp))
+                .height(260.dp)
+                .background(if (isDark) Color(0xFF04060A) else Color(0xFF1E293B), RoundedCornerShape(12.dp))
+                .border(2.dp, if (isDark) Color(0xFF1B2336) else Color(0xFF334155), RoundedCornerShape(12.dp))
                 .clip(RoundedCornerShape(12.dp))
         ) {
-            // Background Paths
             Canvas(modifier = Modifier.fillMaxSize()) {
-                val width = size.width
-                val height = size.height
-                val yMid = height * 0.45f
-                val clientX = width * 0.15f
-                val dpiX = width * 0.5f
-                val serverX = width * 0.85f
+                val yMid = size.height * 0.45f
+                val clientX = size.width * 0.15f
+                val dpiX = size.width * 0.5f
+                val serverX = size.width * 0.85f
 
+                // Base Line
                 drawLine(
-                    color = Color(0xFF64748B),
+                    color = Color(0xFF475569),
                     start = Offset(clientX, yMid),
                     end = Offset(serverX, yMid),
                     strokeWidth = 4f,
                     pathEffect = PathEffect.dashPathEffect(floatArrayOf(15f, 15f))
                 )
 
-                // draw lines simulating traffic flow
-                drawArrow(clientX + 24.dp.toPx(), dpiX - 35.dp.toPx(), yMid - 15.dp.toPx(), Color(0xFFFF9800), this)
-                drawArrow(clientX + 24.dp.toPx(), dpiX - 15.dp.toPx(), yMid, Color(0xFFFFEB3B), this)
-                drawArrow(dpiX + 24.dp.toPx(), serverX - 24.dp.toPx(), yMid, Color(0xFF00FFCC), this)
+                val currentX = clientX + (serverX - clientX) * progress
+
+                // Packets drawing
+                if (step == 0 || step == 1) {
+                    // Single Red Packet
+                    drawRoundRect(
+                        color = Color(0xFFEF4444),
+                        topLeft = Offset(currentX - 20f, yMid - 15f),
+                        size = Size(40f, 30f),
+                        cornerRadius = CornerRadius(8f)
+                    )
+                    if (step == 1 && progress > 0.45f) { // DPI block line
+                        drawLine(Color.Red, Offset(dpiX, yMid - 40f), Offset(dpiX, yMid + 40f), strokeWidth = 10f)
+                    }
+                } else if (step == 2 || step == 3) {
+                    // Two Green Packets (Split)
+                    drawRoundRect(
+                        color = Color(0xFF10B981),
+                        topLeft = Offset(currentX - 30f, yMid - 15f),
+                        size = Size(25f, 30f),
+                        cornerRadius = CornerRadius(8f)
+                    )
+                    drawRoundRect(
+                        color = Color(0xFF10B981),
+                        topLeft = Offset(currentX + 5f, yMid - 15f),
+                        size = Size(25f, 30f),
+                        cornerRadius = CornerRadius(8f)
+                    )
+                } else if (step == 4) {
+                    // Tunnel wrapper packet
+                    drawRoundRect(
+                        color = Color(0xFF0EA5E9),
+                        topLeft = Offset(currentX - 25f, yMid - 15f),
+                        size = Size(50f, 30f),
+                        cornerRadius = CornerRadius(12f)
+                    )
+                    drawRoundRect( // Inner packet
+                        color = Color(0xFF6366F1),
+                        topLeft = Offset(currentX - 15f, yMid - 8f),
+                        size = Size(30f, 16f),
+                        cornerRadius = CornerRadius(4f)
+                    )
+                }
             }
 
             // Client Component
             Box(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .offset(x = 16.dp, y = (-20).dp)
-                    .size(64.dp)
-                    .background(Color(0xFF1E293B), CircleShape)
-                    .border(2.dp, Color(0xFF475569), CircleShape),
+                modifier = Modifier.align(Alignment.CenterStart).offset(x = 16.dp, y = (-20).dp).size(64.dp)
+                    .background(Color(0xFF0F172A), CircleShape).border(2.dp, Color(0xFF334155), CircleShape),
                 contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.Phone, contentDescription = "Client", tint = Color.White, modifier = Modifier.size(32.dp))
-            }
+            ) { Icon(Icons.Default.Phone, contentDescription = null, tint = Color.White, modifier = Modifier.size(32.dp)) }
 
             // DPI Component
             Box(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .offset(y = (-20).dp)
-                    .size(64.dp)
-                    .background(Color(0xFF4C0519), CircleShape)
-                    .border(2.dp, Color(0xFF881F3B), CircleShape),
+                modifier = Modifier.align(Alignment.Center).offset(y = (-20).dp).size(64.dp)
+                    .background(Color(0xFF4C0519), CircleShape).border(2.dp, Color(0xFF9F1239), CircleShape),
                 contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.Warning, contentDescription = "DPI", tint = Color(0xFFFDA4AF), modifier = Modifier.size(32.dp))
-            }
+            ) { Icon(Icons.Default.Warning, contentDescription = null, tint = Color(0xFFFDA4AF), modifier = Modifier.size(32.dp)) }
 
             // Server Component
             Box(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .offset(x = (-16).dp, y = (-20).dp)
-                    .size(64.dp)
-                    .background(Color(0xFF064E3B), CircleShape)
-                    .border(2.dp, Color(0xFF047857), CircleShape),
+                modifier = Modifier.align(Alignment.CenterEnd).offset(x = (-16).dp, y = (-20).dp).size(64.dp)
+                    .background(Color(0xFF064E3B), CircleShape).border(2.dp, Color(0xFF047857), CircleShape),
                 contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.Share, contentDescription = "Server", tint = Color(0xFF6EE7B7), modifier = Modifier.size(32.dp))
-            }
+            ) { Icon(Icons.Default.Share, contentDescription = null, tint = Color(0xFF6EE7B7), modifier = Modifier.size(32.dp)) }
 
-            // Simple labels inside container
             LabelNode("CLIENT", Alignment.CenterStart, Modifier.padding(start = 22.dp).offset(y = 35.dp))
             LabelNode("FIREWALL (DPI)", Alignment.Center, Modifier.offset(y = 35.dp))
             LabelNode("TARGET SERVER", Alignment.CenterEnd, Modifier.padding(end = 12.dp).offset(y = 35.dp))
+            
+            // Bottom Instruction Text Panel
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .background(if(isDark) Color(0xFF0B0F19) else Color(0xFF161E2E))
+                    .padding(12.dp)
+            ) {
+                Text(titles[step], fontWeight = FontWeight.Black, color = Color.White, fontSize = 14.sp)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(descs[step], color = Color(0xFF94A3B8), fontSize = 11.sp, lineHeight = 16.sp)
+            }
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Button(
+                onClick = { step = if(step > 0) step - 1 else maxSteps },
+                colors = ButtonDefaults.buttonColors(containerColor = if(isDark) Color(0xFF1E293B) else Color(0xFFE2E8F0), contentColor = if(isDark) Color.White else Color.Black)
+            ) { Text("PREV") }
+            
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
+                (0..maxSteps).forEach { i ->
+                    Box(modifier = Modifier.size(8.dp).background(if(i == step) Color(0xFF00BFA5) else Color.Gray, CircleShape))
+                }
+            }
+            
+            Button(
+                onClick = { step = if(step < maxSteps) step + 1 else 0 },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00BFA5))
+            ) { Text(if(step == maxSteps) "RESTART" else "NEXT") }
         }
     }
 }
@@ -1245,27 +1386,4 @@ fun BoxScope.LabelNode(name: String, alignment: Alignment, modifier: Modifier = 
     ) {
         Text(name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.Black, fontFamily = FontFamily.Monospace)
     }
-}
-
-private fun drawArrow(startX: Float, endX: Float, y: Float, color: Color, drawScope: androidx.compose.ui.graphics.drawscope.DrawScope) {
-    drawScope.drawLine(
-        color = color,
-        start = Offset(startX, y),
-        end = Offset(endX, y),
-        strokeWidth = 6f
-    )
-    val isRight = endX > startX
-    val factor = if (isRight) 1f else -1f
-    drawScope.drawLine(
-        color = color,
-        start = Offset(endX, y),
-        end = Offset(endX - (10f * factor), y - 10f),
-        strokeWidth = 6f
-    )
-    drawScope.drawLine(
-        color = color,
-        start = Offset(endX, y),
-        end = Offset(endX - (10f * factor), y + 10f),
-        strokeWidth = 6f
-    )
 }
