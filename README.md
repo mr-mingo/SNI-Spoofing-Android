@@ -37,11 +37,11 @@
 
 <h2 style="text-align: right;">📸 تصاویر برنامه</h2>
 <div align="center">
-  <img src="URL_SCREENSHOT_1_HERE" width="30%" alt="Screenshot 1" />
+  <img src="<img width="608" height="1280" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/14f7c190-ad1e-419c-8f45-2526b3ec6d77" />" width="30%" alt="Screenshot 1" />
   &nbsp;&nbsp;
-  <img src="URL_SCREENSHOT_2_HERE" width="30%" alt="Screenshot 2" />
+  <img src="<img width="590" height="1238" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/4f9714cf-aa2b-47e6-9133-c0056e706cca" />" width="30%" alt="Screenshot 2" />
   &nbsp;&nbsp;
-  <img src="URL_SCREENSHOT_3_HERE" width="30%" alt="Screenshot 3" />
+  <img src="<img width="610" height="1280" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/1b16ed3f-55b7-4831-95ce-1f0c2eab9837" />" width="30%" alt="Screenshot 3" />
 </div>
 
 <h2 style="text-align: right;">📥 چرخه انتشار و نصب</h2>
@@ -165,11 +165,11 @@ UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 
 ## 📸 Screenshots
 <div align="center">
-  <img src="URL_SCREENSHOT_1_HERE" width="30%" alt="Screenshot 1" />
+  <img src="<img width="608" height="1280" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/14f7c190-ad1e-419c-8f45-2526b3ec6d77" />" width="30%" alt="Screenshot 1" />
   &nbsp;&nbsp;
-  <img src="URL_SCREENSHOT_2_HERE" width="30%" alt="Screenshot 2" />
+  <img src="<img width="590" height="1238" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/4f9714cf-aa2b-47e6-9133-c0056e706cca" />" width="30%" alt="Screenshot 2" />
   &nbsp;&nbsp;
-  <img src="URL_SCREENSHOT_3_HERE" width="30%" alt="Screenshot 3" />
+  <img src="<img width="610" height="1280" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/1b16ed3f-55b7-4831-95ce-1f0c2eab9837" />" width="30%" alt="Screenshot 3" />
 </div>
 
 ## 📥 Release Cycle & Installation
