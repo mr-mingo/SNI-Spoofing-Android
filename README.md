@@ -36,7 +36,7 @@
 </ul>
 
 <h2 style="text-align: right;">📸 تصاویر برنامه</h2>
-<img width="250" height="640" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/1380c201-3955-409e-b9c8-97cd07b85d28" /><img width="250" height="640" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/c631db52-cf09-4a23-9c00-daed715054bd" /><img width="250" height="640" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/c0265cf3-c22f-4946-9e59-ada90973e5fd" />
+<img width="250" height="550" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/1380c201-3955-409e-b9c8-97cd07b85d28" /><img width="250" height="550" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/c631db52-cf09-4a23-9c00-daed715054bd" /><img width="250" height="550" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/c0265cf3-c22f-4946-9e59-ada90973e5fd" />
 
 
 
@@ -161,13 +161,7 @@ UQCPjuSUe5OADe8ZkN_RDkEsmcff0jWgrmpKKoxfo8C0CVBN
 * 🎛️ **Quick Settings (QS) Tile:** Start or stop the tunneling process directly from the Android control center.
 
 ## 📸 Screenshots
-<div align="center">
-  <img src="<img width="608" height="1280" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/14f7c190-ad1e-419c-8f45-2526b3ec6d77" />" width="30%" alt="Screenshot 1" />
-  &nbsp;&nbsp;
-  <img src="<img width="590" height="1238" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/4f9714cf-aa2b-47e6-9133-c0056e706cca" />" width="30%" alt="Screenshot 2" />
-  &nbsp;&nbsp;
-  <img src="<img width="610" height="1280" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/1b16ed3f-55b7-4831-95ce-1f0c2eab9837" />" width="30%" alt="Screenshot 3" />
-</div>
+<img width="250" height="550" alt="photo_2026-06-06_06-36-43" src="https://github.com/user-attachments/assets/1380c201-3955-409e-b9c8-97cd07b85d28" /><img width="250" height="550" alt="photo_2026-06-06_06-36-41" src="https://github.com/user-attachments/assets/c631db52-cf09-4a23-9c00-daed715054bd" /><img width="250" height="550" alt="photo_2026-06-06_06-36-42" src="https://github.com/user-attachments/assets/c0265cf3-c22f-4946-9e59-ada90973e5fd" />
 
 ## 📥 Release Cycle & Installation
 We utilize GitHub Releases to distribute our application binaries:
